@@ -17,9 +17,9 @@ const Metrics = () => {
 
   useEffect(()=>{
     if (!isLoading && data) {
-        console.log('DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa')
-        console.log(data)
-        console.log(data?.metrics)
+        // console.log('DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa')
+        // console.log(data)
+        // console.log(data?.metrics)
     }
 }, [data, isLoading, error])
 

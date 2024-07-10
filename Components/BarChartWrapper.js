@@ -35,6 +35,8 @@ const BarChartWrapper = ({data}) => {
 
       useEffect(()=>{
         if(!data) return
+        setIsLoading(true)
+        
         const currentYear = years[activeIndex]
         const monthlyData = Array.from({ length: 12 }, (_, index) => {
           const currentMonth = `${currentYear}-${String(index + 1).padStart(2, '0')}`
@@ -63,7 +65,7 @@ const BarChartWrapper = ({data}) => {
           };
         });
         setChartData(monthlyData)
-        setIsLoading(false)
+        
       }, [activeIndex, data, years, type])
 
   return (
