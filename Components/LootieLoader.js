@@ -10,8 +10,6 @@ const LootieLoader = () => {
             height: 50,
             marginLeft: 'auto',
             marginRight: 'auto',
-            backgroundColor: 'invert(1)',
-            
             }}
         source={require('../assets/Lootie/loader.json')}
     />

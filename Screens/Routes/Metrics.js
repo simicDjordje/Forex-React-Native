@@ -8,6 +8,7 @@ import Entypo from '@expo/vector-icons/Entypo'
 import { useGetAllDataQuery } from "../../redux/services/apiCore"
 import LineChartWrapper from '../../Components/LineChartWrapper'
 import BarChartWrapper from '../../Components/BarChartWrapper'
+import DonutChartWrapper from '../../Components/DonutChartWrapper'
 
 const Metrics = () => {
   const [skip, setSkip] = useState(false)
@@ -203,6 +204,8 @@ const Metrics = () => {
         </View>
         
         <View className="px-4 mt-10 mb-56">
+
+
           {/* Trading Period-Line Chart */}
           <View className="rounded-xl mt-5 border border-0.5 border-[#202021]">
             <LinearGradient
@@ -217,6 +220,8 @@ const Metrics = () => {
               </View>
             </LinearGradient>
           </View>
+
+
           {/* Monthly Gain-Bar Chart */}
           <View className="rounded-xl mt-5 border border-0.5 border-[#202021]">
             <LinearGradient
@@ -231,6 +236,24 @@ const Metrics = () => {
               </View>
             </LinearGradient>
           </View>
+
+
+          {/* Most Active Days-Donut/Pie Chart */}
+          <View className="rounded-xl mt-5 border border-0.5 border-[#202021]">
+            <LinearGradient
+              colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0)']}
+              // style={{ height: 200 }}
+              start={{ x: 0.5, y: 0 }}
+              end={{ x: 0.5, y: 1 }}
+              className="rounded-xl"
+            >
+              <View className="py-4">
+                <DonutChartWrapper data={data?.most_active_days} />
+              </View>
+            </LinearGradient>
+          </View>
+
+
         </View>
         
 

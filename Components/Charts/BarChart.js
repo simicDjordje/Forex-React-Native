@@ -83,30 +83,31 @@ const BarChartComponent = ({data, isLoading, setIsLoading}) => {
         let maxValueModified = 0
 
         const modifiedDataArray = data.map((i, index) => {
-            if(Math.abs(Number(i.value)) > maxValueModified){
-                maxValueModified = Math.abs(Number(i.value))
+            let value = isNaN(i.value) ? 0 : Number(i.value)
+
+            if(Math.abs(Number(value)) > maxValueModified){
+                maxValueModified = Math.abs(Number(value))
             }
 
-            let value = !isNaN(i.value) ? Number(i.value) : 0
             let frontColor = ''
             let wasNegative = false
 
             if(isAllNegative){
                 frontColor = '#f08080cc'
-                value = Math.abs(Number(i.value))
+                value = Math.abs(Number(value))
                 wasNegative = true
             }
 
             if(isAllPositive) frontColor = index % 2 == 0 ? '#FFDBE4' : '#C5C5F9'
 
             if(!isAllNegative && !isAllPositive){
-                if(Number(i.value) < 0){
+                if(Number(value) < 0){
                     frontColor = '#f08080cc'
                     wasNegative = true
-                    value = Math.abs(Number(i.value))
+                    value = Math.abs(Number(value))
                 }
 
-                if(Number(i.value) > 0) frontColor = '#C5C5F9'
+                if(Number(value) > 0) frontColor = '#C5C5F9'
             }
 
             return {
@@ -123,7 +124,7 @@ const BarChartComponent = ({data, isLoading, setIsLoading}) => {
 
     useEffect(()=>{
         if(!modifiedData.length) return
-        setTimeout(()=>{setIsLoading(false)}, 10000)
+        setTimeout(()=>{setIsLoading(false)}, 1000)
         //setIsLoading(false)
     }, [modifiedData])
 
@@ -160,9 +161,24 @@ const BarChartComponent = ({data, isLoading, setIsLoading}) => {
 
     if(isAllZero){
         return (
-            <View className="h-44 flex flex-row justify-center items-center">
-                <View className="flex flex-col justify-center items-center mb-10">
-                    <Text className="text-white text-lg">No data yet</Text>
+            <View className="h-60 flex flex-col">
+                <View className="px-6 -mt-16 flex flex-row justify-between items-center">
+                    <View className="flex flex-row justify-between bg-[#202021] p-2 rounded-md flex-1 mr-2">
+                        <View className="bg-[#343437] rounded-md py-2 px-4 flex flex-row justify-start items-center w-full">
+                            <View className="h-3 w-3 bg-transparent rounded-full"></View>
+                            <Text className="text-transparent ml-2">positive</Text>
+                        </View>
+                    </View>
+
+                    <View className="bg-[#202021] p-2 rounded-md">
+                        <TouchableOpacity onPress={() => {}} className="bg-[#343437] p-1 rounded-md">
+                            <MaterialIcons name="keyboard-arrow-right" size={24} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View className="flex-1 flex flex-row justify-center items-center">
+                <Text className="text-white text-lg">No data yet</Text>
                 </View>
             </View>
         )
