@@ -9,43 +9,44 @@ import DonutChartComponent from './Charts/DonutChart';
 const DonutChartWrapper = ({data}) => {
     const [chartData, setChartData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [maxValueItem, setMaxValueItem] = useState(null)
 
     useEffect(()=>{
         if(!data) return
 
         const chartDataArray = [
             {
-              text: "Mon",
+              text: "Monday",
               value: 0,
               color: "#8C8BEE",
             },
             {
-              text: "Tue",
+              text: "Tuesday",
               value: 0,
               color: "#A08CEE", 
             },
             {
-              text: "Wed",
+              text: "Wednesday",
               value: 0,
               color: "#B48DEE", 
             },
             {
-              text: "Thu",
+              text: "Thursday",
               value: 0,
               color: "#C88EEE", 
             },
             {
-              text: "Fri",
+              text: "Friday",
               value: 0,
               color: "#DC8FEE", 
             },
             {
-              text: "Sat",
+              text: "Saturday",
               value: 0,
               color: "#F090EE", 
             },
             {
-              text: "Sun",
+              text: "Sunday",
               value: 0,
               color: "#F08080",
             }
@@ -65,6 +66,7 @@ const DonutChartWrapper = ({data}) => {
 
         if (maxItems.length === 1) {
             maxItems[0].focused = true
+            setMaxValueItem(maxItems[0])
         }
 
         console.log(chartDataArray)
@@ -88,6 +90,7 @@ const DonutChartWrapper = ({data}) => {
                 data={chartData}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                maxValueItem={maxValueItem}
             />
         </View>
     </View>

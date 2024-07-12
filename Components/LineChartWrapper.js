@@ -1,7 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, {useState, useCallback, useEffect} from 'react'
+import React, {useState, useCallback, useEffect, useRef} from 'react'
 import LineChartComponent from './Charts/LineChart'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const monthNames = [
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -14,6 +15,8 @@ const LineChartWrapper = ({data}) => {
   const [chartData, setChartData] = useState([])
   const [chartType, setChartType] = useState('line')
   const [isLoading, setIsLoading] = useState(true)
+  const chartRef = useRef(null)
+
 
   const get24hPeriod = useCallback(() => {
     let hoursArray = []
@@ -167,6 +170,12 @@ const LineChartWrapper = ({data}) => {
 
   }, [data, type, time])
 
+  const handleScrollRef = () => {
+    if(chartRef.current){
+      chartRef.current.scrollToEnd()
+    }
+  }
+
   return (
     <View className="">
         <View className="flex flex-row justify-between px-2">
@@ -213,6 +222,12 @@ const LineChartWrapper = ({data}) => {
                     <Text className={`${time === 'all' ? 'text-white' : 'text-gray-500'}`}>ALL</Text>
                 </TouchableOpacity>
             </View>
+
+            <View className="bg-[#202021] p-2 rounded-md ml-2">
+                <TouchableOpacity onPress={handleScrollRef} className="bg-[#343437] p-1 rounded-md">
+                    <MaterialIcons name="keyboard-arrow-right" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
         </View>
 
         <View className="mt-10 min-h-44">
@@ -222,6 +237,7 @@ const LineChartWrapper = ({data}) => {
                 time={time}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                ref={chartRef}
             />
         </View>
     </View>

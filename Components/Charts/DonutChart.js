@@ -1,30 +1,26 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
+
+
         
-const DonutChartComponent = ({data, isLoading, setIsLoading}) => {
+const DonutChartComponent = ({data, isLoading, setIsLoading, maxValueItem}) => {
     const [modifiedData, setModifiedData] = useState([])
 
     useEffect(()=>{
         setModifiedData(data)
         setIsLoading(false)
-
     }, [data])
 
-    const pieData = [
-        {value: 54, color: '#177AD5', text: '54%'},
-        {value: 40, color: '#79D2DE', text: '30%'},
-        {value: 20, color: '#ED6665', text: '26%'},
-    ];
 
     if(isLoading) return null
     
     return(
-        <View className="flex flex-row justify-center items-center">
+        <View className="flex flex-col justify-center items-center">
             <PieChart
             showText={false}
             textColor="black"
-            radius={140}
+            radius={120}
             textSize={20}
             showTextBackground
             textBackgroundRadius={26}
@@ -32,12 +28,37 @@ const DonutChartComponent = ({data, isLoading, setIsLoading}) => {
             donut
             isAnimated
             showGradient
-            innerRadius={80}
+            innerRadius={90}
             innerCircleColor={'#0d0d0c'}
             focusOnPress
-            strokeWidth={10}
-            strokeColor="#FFFFFF00"
+            //strokeWidth={10}
+            //strokeColor="#FFFFFF00"
+            centerLabelComponent={() => {
+                if(maxValueItem === null) return null
+                return (
+                  <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text
+                      style={{fontSize: 30, color: 'white', fontWeight: 'bold'}}>
+                      {maxValueItem.value}
+                    </Text>
+                    <Text style={{fontSize: 14, color: 'white'}}>{maxValueItem.text}</Text>
+                  </View>
+                );
+              }}
             />
+            <View className="mt-10 w-full px-8">
+                <View className="flex flex-row flex-wrap">
+                    {modifiedData.map((item, index) => {
+                        console.log(item.color)
+                        return (
+                            <View key={index} className="w-1/2 flex flex-row justify-start items-center gap-4 mb-2">
+                                <View className={`w-3 h-3 rounded-full`} style={{backgroundColor: item.color}}></View>
+                                <Text className="text-white">{item.text}</Text>
+                            </View>
+                        )
+                    })}
+                </View>
+            </View>
         </View>
     )
 }

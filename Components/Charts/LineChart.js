@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, forwardRef} from 'react'
 import { LineChart } from "react-native-gifted-charts"
 import LootieLoader from '../LootieLoader'
 
 
-const LineChartComponent = ({data, isLoading, setIsLoading}) => {
+const LineChartComponent = forwardRef(({data, isLoading, setIsLoading}, ref) => {
     const [modifiedData, setModifiedData] = useState([])
     const [maxValue, setMaxValue] = useState(0)
     const [isAllNegative, setIsAllNegative] = useState(null)
@@ -59,6 +59,7 @@ const LineChartComponent = ({data, isLoading, setIsLoading}) => {
     }, [isAllNegative, isAllZero])
 
     useEffect(()=>{
+        //console.log('MODIFIED_DATA: ', modifiedData)
         if(!modifiedData.length) return
         //console.log('3 ', isLoading);
         //console.log('MD: ', modifiedData)
@@ -89,6 +90,7 @@ const LineChartComponent = ({data, isLoading, setIsLoading}) => {
     
   return (
     <LineChart
+        scrollRef={ref}
         data={modifiedData}
         thickness={3}
         hideDataPoints={false}
@@ -130,6 +132,6 @@ const LineChartComponent = ({data, isLoading, setIsLoading}) => {
         delayBeforeUnFocus={5000}
       />
   )
-}
+})
 
 export default LineChartComponent

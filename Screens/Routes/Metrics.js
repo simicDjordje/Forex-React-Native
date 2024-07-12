@@ -29,7 +29,7 @@ const Metrics = () => {
       <SafeAreaView className="min-h-screen bg-[#101011]">
         <View className="px-4 mt-10">
           <Header />
-          <View className="bg-yellow-500 mt-32">
+          <View className="mt-60">
             <LootieLoader />
           </View>
         </View>
