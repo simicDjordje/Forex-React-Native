@@ -9,6 +9,10 @@ import { useGetAllDataQuery } from "../../redux/services/apiCore"
 import LineChartWrapper from '../../Components/LineChartWrapper'
 import BarChartWrapper from '../../Components/BarChartWrapper'
 import DonutChartWrapper from '../../Components/DonutChartWrapper'
+import MiniCard from '../../Components/MiniCard'
+import TradesCard from '../../Components/TradesCard'
+import TradeLengthCard from '../../Components/TradeLengthCard'
+import ProfitFactorCard from '../../Components/ProfitFactorCard'
 
 const Metrics = () => {
   const [skip, setSkip] = useState(false)
@@ -23,6 +27,8 @@ const Metrics = () => {
         // console.log(data?.metrics)
     }
 }, [data, isLoading, error])
+
+
 
   if(isLoading){
     return (
@@ -46,14 +52,14 @@ const Metrics = () => {
 
         <View className="px-4 mt-14">
           <Text className="text-white text-3xl">Metrics</Text>
-          <Text className="text-[#343437] text-md mt-3">Updated 26 minutes ago</Text>
+          {/* <Text className="text-[#343437] text-md mt-3">Updated 26 minutes ago</Text> */}
         </View>
 
-        <View className="px-4 mt-3">
+        {/* <View className="px-4 mt-3">
           <TouchableOpacity className="bg-[#202021] w-1/4 flex flex-row justify-center px-1 py-2 rounded-lg">
             <Text className="text-white">Share Link</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         
 
@@ -61,150 +67,54 @@ const Metrics = () => {
         
         <View className="px-4 mt-10">
           {/* Card 1 */}
-          <View className="rounded-xl h-[196px] border border-0.5 border-[#202021]">
-            <LinearGradient
-              colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0)']}
-              style={{ height: 200 }}
-              start={{ x: 0.5, y: 0 }}
-              end={{ x: 0.5, y: 1 }}
-              className="rounded-xl"
-            >
-              <View className="h-full flex flex-col justify-between">
-                <View className="flex flex-row justify-between items-center px-3 mt-3">
-                  <Text className="text-[#97979D] text-md">Balance</Text>
-                  <TouchableOpacity>
-                    <Entypo name="dots-three-horizontal" size={18} color="#97979D" />
-                  </TouchableOpacity>
-                </View>
-
-                <View className="flex flex-row justify-between px-3 flex-1 py-3">
-                  <View className="h-full">
-                    <View className="flex flex-row justify-start items-end">
-                      <Text className="text-white text-3xl">$14,147.<Text className="text-[#343437]">67</Text></Text>
-                      <Text className="text-sm text-[#C5C5F9] mb-1">+11k%</Text>
-                    </View>
-                    <View className="mt-10">
-                      <Text className="text-[#97979D] text-md">Highest balance</Text>
-                      <Text className="text-white text-lg">$14,147.<Text className="text-[#343437]">67</Text></Text>
-                    </View>
-                  </View>
-                  <View>
-                    <Text>chart</Text>
-                  </View>
-                </View>
-              </View>
-            </LinearGradient>
-          </View>
-
+          <MiniCard 
+            data={{
+                text1: 'Balance', 
+                num1: data?.account_data?.balance, 
+                percent: 11, 
+                text2: 'Highest balance', 
+                num2: data?.account_data?.highestBalance
+              }} 
+              showMiniChart={true} 
+              chart_data={data?.chart_data} 
+              chart_type_data={'gains'}
+          />
           {/* Card 2 */}
-          <View className="rounded-xl h-[196px] mt-5 border border-0.5 border-[#202021]">
-            <LinearGradient
-              colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0)']}
-              style={{ height: 200 }}
-              start={{ x: 0.5, y: 0 }}
-              end={{ x: 0.5, y: 1 }}
-              className="rounded-xl"
-            >
-              <View className="h-full flex flex-col justify-between">
-                <View className="flex flex-row justify-between items-center px-3 mt-3">
-                  <Text className="text-[#97979D] text-md">Profit</Text>
-                  <TouchableOpacity>
-                    <Entypo name="dots-three-horizontal" size={18} color="#97979D" />
-                  </TouchableOpacity>
-                </View>
-
-                <View className="flex flex-row justify-between px-3 flex-1 py-3">
-                  <View className="h-full">
-                    <View className="flex flex-row justify-start items-end">
-                      <Text className="text-white text-3xl">$5,719.<Text className="text-[#343437]">87</Text></Text>
-                      <Text className="text-sm text-[#C5C5F9] mb-1">+11k%</Text>
-                    </View>
-                    <View className="mt-10">
-                      <Text className="text-[#97979D] text-md">Fees</Text>
-                      <Text className="text-white text-lg">$3113.<Text className="text-[#343437]">54</Text></Text>
-                    </View>
-                  </View>
-                  <View>
-                    <Text>chart</Text>
-                  </View>
-                </View>
-              </View>
-            </LinearGradient>
-          </View>
-
+          <MiniCard 
+            data={{
+              text1: 'Profit', 
+              num1: data?.account_data?.profit, 
+              percent: 11, 
+              text2: 'Fees', 
+              num2: data?.account_data?.fees
+            }} 
+            showMiniChart={true} 
+            chart_data={data?.chart_data} 
+            chart_type_data={'profit'}
+          />
           {/* Card 3 */}
-          <View className="rounded-xl h-[196px] mt-5 border border-0.5 border-[#202021]">
-            <LinearGradient
-              colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0)']}
-              style={{ height: 200 }}
-              start={{ x: 0.5, y: 0 }}
-              end={{ x: 0.5, y: 1 }}
-              className="rounded-xl"
-            >
-              <View className="h-full flex flex-col justify-between">
-                <View className="flex flex-row justify-between items-center px-3 mt-3">
-                  <Text className="text-[#97979D] text-md">Deposits</Text>
-                  <TouchableOpacity>
-                    <Entypo name="dots-three-horizontal" size={18} color="#97979D" />
-                  </TouchableOpacity>
-                </View>
-
-                <View className="flex flex-row justify-between px-3 flex-1 py-3">
-                  <View className="h-full">
-                    <View className="flex flex-row justify-start items-end">
-                      <Text className="text-white text-3xl">$5,719.<Text className="text-[#343437]">87</Text></Text>
-                    </View>
-                    <View className="mt-10">
-                      <Text className="text-[#97979D] text-md">Last transaction</Text>
-                      <Text className="text-white text-lg">$3113.<Text className="text-[#343437]">54</Text></Text>
-                    </View>
-                  </View>
-                  <View>
-                    
-                  </View>
-                </View>
-              </View>
-            </LinearGradient>
-          </View>
-
+          <MiniCard 
+            data={{
+              text1: 'Deposits', 
+              num1: data?.account_data?.deposits, 
+              text2: 'Last transaction', 
+              num2: data?.account_data?.lastTransactionDeposit
+            }} 
+            showMiniChart={false}
+          />
           {/* Card 4 */}
-          <View className="rounded-xl h-[196px] mt-5 border border-0.5 border-[#202021]">
-            <LinearGradient
-              colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0)']}
-              style={{ height: 200 }}
-              start={{ x: 0.5, y: 0 }}
-              end={{ x: 0.5, y: 1 }}
-              className="rounded-xl"
-            >
-              <View className="h-full flex flex-col justify-between">
-                <View className="flex flex-row justify-between items-center px-3 mt-3">
-                  <Text className="text-[#97979D] text-md">Withdrawals</Text>
-                  <TouchableOpacity>
-                    <Entypo name="dots-three-horizontal" size={18} color="#97979D" />
-                  </TouchableOpacity>
-                </View>
-
-                <View className="flex flex-row justify-between px-3 flex-1 py-3">
-                  <View className="h-full">
-                    <View className="flex flex-row justify-start items-end">
-                      <Text className="text-white text-3xl">$5,719.<Text className="text-[#343437]">87</Text></Text>
-                    </View>
-                    <View className="mt-10">
-                      <Text className="text-[#97979D] text-md">Last transaction</Text>
-                      <Text className="text-white text-lg">$3113.<Text className="text-[#343437]">54</Text></Text>
-                    </View>
-                  </View>
-                  <View>
-                    
-                  </View>
-                </View>
-              </View>
-            </LinearGradient>
-          </View>
+          <MiniCard 
+            data={{
+              text1: 'Withdrawals', 
+              num1: data?.account_data?.withdrawls, 
+              text2: 'Last transaction', 
+              num2: data?.account_data?.lastTransactionWithdrawls
+            }} 
+            showMiniChart={false}
+          />
         </View>
         
-        <View className="px-4 mt-10 mb-56">
-
+        <View className="px-4 mt-10 mb-10">
 
           {/* Trading Period-Line Chart */}
           <View className="rounded-xl mt-5 border border-0.5 border-[#202021]">
@@ -252,10 +162,54 @@ const Metrics = () => {
               </View>
             </LinearGradient>
           </View>
-
-
         </View>
         
+        <View className="px-4">
+            <Text className="text-white text-3xl">Advanced statistic</Text>
+        </View>
+
+        <View className="px-4 mt-10">
+          <TradesCard 
+             data={{
+              trades: data?.statistics?.trades,
+              pips: data?.statistics?.pips,
+              averageWinPips: data?.statistics?.averageWinPips,
+              averageWin: data?.statistics?.averageWin,
+              averageLossPips: data?.statistics?.averageLossPips,
+              averageLoss: data?.statistics?.averageLoss,
+              lots: data?.statistics?.lots
+          }}
+          />
+
+          <TradeLengthCard 
+            data={{
+              averageTradeLengthInMilliseconds: data?.statistics?.averageTradeLengthInMilliseconds,
+              longWonTradesPercent: data?.statistics?.longWonTradesPercent,
+              shortWonTradesPercent: data?.statistics?.shortWonTradesPercent,
+              bestTrade: data?.statistics?.bestTrade,
+              bestTradeDate: data?.statistics.bestTradeDate || '/',
+              worstTrade: data?.statistics?.worstTrade,
+              worstTradeDate: data?.statistics?.worstTradeDate,
+              bestTradePips: data?.statistics?.bestTradePips,
+              bestTradePipsDate: data?.statistics?.bestTradePipsDate,
+              worstTradePips: data?.statistics?.worstTradePips,
+              worstTradePipsDate: data?.statistics?.worstTradePipsDate
+          }}
+          />
+
+          <ProfitFactorCard 
+            data={{
+              profitFactor: data?.statistics?.profitFactor,
+              standardDeviationProfit: data?.statistics?.standardDeviationProfit,
+              sharpeRatio: data?.statistics?.sharpeRatio,
+              probability: data?.statistics?.probability,
+              expectancyPips: data?.statistics?.expectancyPips,
+              expectancy: data?.statistics?.expectancy,
+              ahpr: data?.statistics?.averageHoldingPeriodReturn,
+              ghpr: data?.statistics?.geometricHoldingPeriodReturn
+          }}
+          />
+        </View>
 
         <View className="mb-28"></View>
       </ScrollView>

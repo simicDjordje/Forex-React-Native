@@ -69,7 +69,7 @@ const DonutChartWrapper = ({data}) => {
             setMaxValueItem(maxItems[0])
         }
 
-        console.log(chartDataArray)
+        // console.log(chartDataArray)
         setChartData(chartDataArray)
     }, [data])
 
@@ -91,6 +91,7 @@ const DonutChartWrapper = ({data}) => {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 maxValueItem={maxValueItem}
+                setMaxValueItem={setMaxValueItem}
             />
         </View>
     </View>

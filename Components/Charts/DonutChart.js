@@ -1,17 +1,34 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
 
         
-const DonutChartComponent = ({data, isLoading, setIsLoading, maxValueItem}) => {
+const DonutChartComponent = ({data, isLoading, setIsLoading, maxValueItem, setMaxValueItem}) => {
     const [modifiedData, setModifiedData] = useState([])
 
-    
     useEffect(()=>{
         setModifiedData(data)
         setIsLoading(false)
     }, [data])
+
+    const handleDayPress = (item) => {
+        setMaxValueItem(item)
+
+        setModifiedData(prevData => {
+            return prevData.map(prevItem => {
+                if(prevItem.focused && prevItem.focused === true){
+                    return {...prevItem, focused: false}
+                }
+
+                if(prevItem.text === item.text){
+                    return {...prevItem, focused: true}
+                }
+
+                return {...prevItem}
+            })
+        })
+    }
 
 
     if(isLoading) return null
@@ -50,12 +67,11 @@ const DonutChartComponent = ({data, isLoading, setIsLoading, maxValueItem}) => {
             <View className="mt-10 w-full px-8">
                 <View className="flex flex-row flex-wrap">
                     {modifiedData.map((item, index) => {
-                        console.log(item.color)
                         return (
-                            <View key={index} className="w-1/2 flex flex-row justify-start items-center gap-4 mb-2">
+                            <TouchableOpacity onPress={()=>handleDayPress(item)} key={index} className="flex flex-row justify-start items-center gap-2 m-2">
                                 <View className={`w-3 h-3 rounded-full`} style={{backgroundColor: item.color}}></View>
                                 <Text className="text-white">{item.text}</Text>
-                            </View>
+                            </TouchableOpacity>
                         )
                     })}
                 </View>

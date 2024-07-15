@@ -34,7 +34,7 @@ const BottomTabNavigation = () => {
         }}
       />
 
-      <Tab.Screen name="MoneyManager" component={MoneyManagerScreen}
+      {/* <Tab.Screen name="MoneyManager" component={MoneyManagerScreen}
         options={{
             tabBarLabelStyle: {display: 'none'},
             tabBarIcon: ({focused}) => (
@@ -44,7 +44,7 @@ const BottomTabNavigation = () => {
                 </View>
             )
         }}
-      />
+      /> */}
 
       <Tab.Screen name="Strategy" component={StrategyScreen}
         options={{
