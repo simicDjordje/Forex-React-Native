@@ -7,6 +7,7 @@ import { PieChart } from "react-native-gifted-charts";
 const DonutChartComponent = ({data, isLoading, setIsLoading, maxValueItem}) => {
     const [modifiedData, setModifiedData] = useState([])
 
+    
     useEffect(()=>{
         setModifiedData(data)
         setIsLoading(false)
