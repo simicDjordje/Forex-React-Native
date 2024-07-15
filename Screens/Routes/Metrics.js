@@ -13,6 +13,8 @@ import MiniCard from '../../Components/MiniCard'
 import TradesCard from '../../Components/TradesCard'
 import TradeLengthCard from '../../Components/TradeLengthCard'
 import ProfitFactorCard from '../../Components/ProfitFactorCard'
+import TablePeriodCard from '../../Components/TablePeriodCard'
+import {noDataValues} from '../../constants'
 
 const Metrics = () => {
   const [skip, setSkip] = useState(false)
@@ -131,6 +133,8 @@ const Metrics = () => {
             </LinearGradient>
           </View>
 
+          {/* Table Period Card */}
+          <TablePeriodCard data={data?.period_data?.messages[0].content == 'This TradeAccount has no period data' ? noDataValues : data?.period_data} />
 
           {/* Monthly Gain-Bar Chart */}
           <View className="rounded-xl mt-5 border border-0.5 border-[#202021]">

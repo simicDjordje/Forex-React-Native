@@ -823,3 +823,77 @@ export const countriesArray = [
         "label": "Zimbabwe"
     }
 ]
+
+
+
+
+export const noDataValues = {
+    "today": [
+        {
+            "id": 0,
+            "trades": 0,
+            "profit": 0,
+            "lots": 0,
+            "pips": 0,
+            "gain": 0,
+            "wonTradesPercent": 0,
+            "tradesDifference": 0,
+            "profitDifference": 0,
+            "lotsDifference": 0,
+            "pipsDifference": 0,
+            "gainDifference": 0,
+            "wonTradesPercentDifference": 0
+        }
+    ],
+    "thisWeek": [
+        {
+            "id": 0,
+            "trades": 0,
+            "profit": 0,
+            "lots": 0,
+            "pips": 0,
+            "gain": 0,
+            "wonTradesPercent": 0,
+            "tradesDifference": 0,
+            "profitDifference": 0,
+            "lotsDifference": 0,
+            "pipsDifference": 0,
+            "gainDifference": 0,
+            "wonTradesPercentDifference": 0
+        }
+    ],
+    "thisMonth": [
+        {
+            "id": 0,
+            "trades": 0,
+            "profit": 0,
+            "lots": 0,
+            "pips": 0,
+            "gain": 0,
+            "wonTradesPercent": 0,
+            "tradesDifference": 0,
+            "profitDifference": 0,
+            "lotsDifference": 0,
+            "pipsDifference": 0,
+            "gainDifference": 0,
+            "wonTradesPercentDifference": 0
+        }
+    ],
+    "thisYear": [
+        {
+            "id": 0,
+            "trades": 0,
+            "profit": 0,
+            "lots": 0,
+            "pips": 0,
+            "gain": 0,
+            "wonTradesPercent": 0,
+            "tradesDifference": 0,
+            "profitDifference": 0,
+            "lotsDifference": 0,
+            "pipsDifference": 0,
+            "gainDifference": 0,
+            "wonTradesPercentDifference": 0
+        }
+    ],
+}
