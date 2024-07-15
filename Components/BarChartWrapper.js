@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BarChartComponent from './Charts/BarChart'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 
 const  monthNames = [
@@ -83,6 +83,7 @@ const BarChartWrapper = ({data}) => {
         </View>
 
         <View className="mt-5 px-6">
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
             <View className="flex flex-row justify-between bg-[#202021] p-2 rounded-md">
                 {years.map((year, index) => (
                     <TouchableOpacity key={index} onPress={() => setActiveIndex(index)} className="bg-[#343437] rounded-md py-2 px-4 flex flex-row justify-center items-center">
@@ -90,6 +91,7 @@ const BarChartWrapper = ({data}) => {
                     </TouchableOpacity>
                 ))}
             </View>
+            </ScrollView>
         </View>
 
         <View className="mt-20 min-h-44">

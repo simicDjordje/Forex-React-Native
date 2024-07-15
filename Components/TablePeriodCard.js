@@ -1,7 +1,9 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
-import { AntDesign } from '@expo/vector-icons';
+// import { AntDesign } from '@expo/vector-icons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 
 const TablePeriodCard = ({data}) => {
     const [activeSlideIndex, setActiveSlideIndex] = useState(0)
@@ -26,7 +28,7 @@ const TablePeriodCard = ({data}) => {
 
 
   return (
-    <View className="rounded-xl border border-0.5 border-[#202021] my-2">
+    <View className="rounded-xl border border-0.5 border-[#202021] mt-5">
         <LinearGradient
             colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0)']}
             style={{ height: 350 }}
@@ -40,10 +42,12 @@ const TablePeriodCard = ({data}) => {
                 <Text className="text-white text-2xl ml-2">Table period</Text>
                 <View className="flex flex-row justify-between bg-[#202021] p-2 rounded-md">
                     <TouchableOpacity onPress={()=>handleIndexChange('back')} className="mr-2 bg-[#343437] p-1 rounded-md">
-                        <AntDesign name="left" size={24} color={activeSlideIndex === 0 ? 'gray' : 'white'} />
+                        {/* <AntDesign name="left" size={24} color={activeSlideIndex === 0 ? 'gray' : 'white'} /> */}
+                        <MaterialIcons name="keyboard-arrow-left" size={24} color={activeSlideIndex === 0 ? 'gray' : 'white'} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>handleIndexChange('next')} className="bg-[#343437] p-1 rounded-md">
-                        <AntDesign name="right" size={24} color={activeSlideIndex === 3 ? 'gray' : 'white'} />
+                        {/* <AntDesign name="right" size={24} color={activeSlideIndex === 3 ? 'gray' : 'white'} /> */}
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={activeSlideIndex === 3 ? 'gray' : 'white'} />
                     </TouchableOpacity>
                 </View>
             </View>

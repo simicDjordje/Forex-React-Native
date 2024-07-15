@@ -168,11 +168,11 @@ const Metrics = () => {
           </View>
         </View>
         
-        <View className="px-4">
+        <View className="px-4 mt-4">
             <Text className="text-white text-3xl">Advanced statistic</Text>
         </View>
 
-        <View className="px-4 mt-10">
+        <View className="px-4 mt-6">
           <TradesCard 
              data={{
               trades: data?.statistics?.trades,
