@@ -9,3 +9,5 @@ export { default as AccountScreen } from './Routes/Account'
 export { default as AccountConfScreen } from './Routes/AccountConf'
 
 
+export {default as LoadingScreen} from './Routes/Loading'
+

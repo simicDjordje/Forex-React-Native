@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../Components/Header'
 import LootieLoader from '../../Components/LootieLoader'
@@ -16,13 +16,17 @@ import ProfitFactorCard from '../../Components/ProfitFactorCard'
 import TablePeriodCard from '../../Components/TablePeriodCard'
 import {noDataValues} from '../../constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Metrics = () => {
-  const [skip, setSkip] = useState(false)
-  const {data, error, isLoading} = useGetAllDataQuery(null, {
-    skip: skip,
-  })
+  const {data, error, isLoading, refetch} = useGetAllDataQuery(null)
 
+
+  useFocusEffect(
+    useCallback(()=>{
+      refetch()
+    }, [])
+  )
 
   if(isLoading){
     return (

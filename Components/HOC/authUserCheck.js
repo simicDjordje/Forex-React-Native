@@ -5,20 +5,23 @@ import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/nativ
 const authUserCheck = (WrappedComponent) => {
     return (props) => {
         const navigation = useNavigation()
-
+        const route = useRoute()
 
         const checkStatus = useCallback(async ()=>{
             try{
                 const token = await AsyncStorage.getItem('@userToken')
                 let userData = await AsyncStorage.getItem('@userData') 
                 
-                
+
                 if(!token || !userData){
                     navigation.navigate('StackTabs', {screen: 'Login'})
                     return
                 }
 
-                
+                if(route.name === 'Loading'){
+                    navigation.navigate('MainTabs', {screen: 'Metrics'})
+                    return
+                }
 
                 userData = JSON.parse(userData)
                 if(!userData.mt_acc_id || userData.mt_acc_id == '0'){

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 //import { createStackNavigator } from '@react-navigation/stack'
 import BottomTabNavigation from './BottomTabNavigation'
 import StackNavigation from './StackNavigation'
+import LoadingScreenNavigation from "./LoadingScreenNavigation"
 // import ModalNavigation from "./ModalNavigation"
 
 const Stack = createNativeStackNavigator()
@@ -15,6 +16,7 @@ const Navigation = () => {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }}>
+                <Stack.Screen name="LoadingTabs" component={LoadingScreenNavigation} />
                 <Stack.Screen name="StackTabs" component={StackNavigation} />
                 <Stack.Screen name="MainTabs" component={BottomTabNavigation} />
                 {/* <Stack.Screen name="ModalTabs" component={ModalNavigation} /> */}
