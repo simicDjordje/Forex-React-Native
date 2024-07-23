@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { useEffect, useState } from 'react'
 import MiniLineChartComponent from './Charts/MiniLineChart'
 
-const MiniCard = ({data, showMiniChart, chart_data, chart_type_data}) => {
+const MiniCard = ({data, showMiniChart, chart_data, chart_type_data, halfSize}) => {
     const [chartData, setChartData] = useState([])
     const [time, setTime] = useState('m')
     const formattedNum1Array = !data?.num1 ? ['0.00', ''] : parseFloat(data?.num1).toFixed(2).toLocaleString('en').split('.')
@@ -35,7 +35,7 @@ const MiniCard = ({data, showMiniChart, chart_data, chart_type_data}) => {
     }, [chart_type_data, showMiniChart, chart_data]);
 
   return (
-    <View className="rounded-xl h-[196px] border border-0.5 border-[#202021] my-2">
+    <View className={`rounded-xl h-[196px] border border-0.5 border-[#202021] my-2 ${halfSize ? 'w-1/2 -mx-2' : ''}`}>
         <LinearGradient
             colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0)']}
             style={{ height: 200 }}

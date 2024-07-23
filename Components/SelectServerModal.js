@@ -2,18 +2,18 @@ import { View, Text, Modal, TouchableOpacity, TextInput, FlatList } from 'react-
 import { MaterialIcons } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons'
 import { useState, useEffect } from 'react'
-import { countriesArray } from '../constants'
 
 
-const SelectCountryModal = ({isModalOpen, setIsModalOpen, setSelectedCountry, country}) => {
+const SelectServerModal = ({isModalOpen, setIsModalOpen, setSelectedServer, serversData}) => {
     const [searchText, setSearchText] = useState('')
-    const [filteredData, setFilteredData] = useState(countriesArray)
-
+    const [filteredData, setFilteredData] = useState(serversData)
+    
     useEffect(()=>{
+        // console.log('serves data: ', serversData)
         if(!searchText){
-            setFilteredData(countriesArray)
+            setFilteredData(serversData)
         }else{
-            const filterArr = countriesArray.filter(i => i.label.toLowerCase().includes(searchText.toLocaleLowerCase()))
+            const filterArr = serversData.filter(i => i.server_name.toLowerCase().includes(searchText.toLocaleLowerCase()))
             setFilteredData(filterArr)
         }
     }, [searchText])
@@ -33,7 +33,7 @@ const SelectCountryModal = ({isModalOpen, setIsModalOpen, setSelectedCountry, co
         <View className="h-3/4 rounded-t-3xl shadow-none bg-[#101011]">
             <View className="mt-5 flex-row justify-between items-center">
               <View className="flex-row justify-start items-center pl-5">
-                <Text className="text-2xl font-bold mr-1 text-[#97979D]">Select country</Text>
+                <Text className="text-2xl font-bold mr-1 text-[#97979D]">Select server</Text>
               </View>
               <TouchableOpacity className="rounded-full mr-5 p-2" onPress={()=>{setIsModalOpen(false)}}>
                 <MaterialIcons name="keyboard-arrow-down" size={24} color={'#97979D'} />
@@ -51,12 +51,12 @@ const SelectCountryModal = ({isModalOpen, setIsModalOpen, setSelectedCountry, co
                 <View className="mt-10">
                 <FlatList
                     data={filteredData}
-                    keyExtractor={(item) => item.value.toString()}
+                    keyExtractor={(item) => item.id}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ paddingBottom: 0 }}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => setSelectedCountry(item.value)} key={item.value} className="my-2 flex-row justify-center items-center">
-                            <Text className="text-lg font-semibold text-[#97979D]">{item.label}</Text>
+                        <TouchableOpacity onPress={() => setSelectedServer(item.id)} key={item.id} className="my-2 flex-row justify-center items-center">
+                            <Text className="text-lg font-semibold text-[#97979D]">{item.server_name}</Text>
                         </TouchableOpacity>
                     )}
                 />
@@ -68,4 +68,4 @@ const SelectCountryModal = ({isModalOpen, setIsModalOpen, setSelectedCountry, co
   )
 }
 
-export default SelectCountryModal
+export default SelectServerModal

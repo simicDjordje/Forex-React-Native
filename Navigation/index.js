@@ -15,8 +15,8 @@ const Navigation = () => {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }}>
-                <Stack.Screen name="MainTabs" component={BottomTabNavigation} />
                 <Stack.Screen name="StackTabs" component={StackNavigation} />
+                <Stack.Screen name="MainTabs" component={BottomTabNavigation} />
                 {/* <Stack.Screen name="ModalTabs" component={ModalNavigation} /> */}
             </Stack.Navigator>
         </NavigationContainer>

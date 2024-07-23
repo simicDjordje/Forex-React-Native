@@ -1,14 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const apiCore = createApi({
 	reducerPath: 'apiCore',
 	baseQuery: fetchBaseQuery({
 		baseUrl: 'http://164.92.129.161/api',
-		// prepareHeaders: (headers) => {
-		// 	headers.set('key', 'value')
-		// 	return headers
-		// }
+		prepareHeaders: async (headers) => {
+			const token = await AsyncStorage.getItem('@userToken')
+			
+			if(token){
+				headers.set('Authorization', `Bearer ${token}`)
+			}
+			return headers
+		}
 	}),
 	endpoints: (builder) => ({
 		getAllData: builder.query({query: () => '/get-all-data2'}),
@@ -24,7 +28,7 @@ export const apiCore = createApi({
 		}),
 		login: builder.mutation({
 			query: (data) => ({
-				url: `/login`,
+				url: `/login-mobile`,
 				method: 'POST',
 				body: data,
 			})

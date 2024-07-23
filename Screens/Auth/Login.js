@@ -1,12 +1,12 @@
 import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Feather from '@expo/vector-icons/Feather'
 import { useLoginMutation } from '../../redux/services/apiCore'
-import { setUser } from '../../redux/features/authSlice'
-import { useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import LootieLoader from '../../Components/LootieLoader'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 const Login = () => {
     const [inputsData, setInputsData] = useState({
@@ -16,9 +16,21 @@ const Login = () => {
     const [hidePass, setHidePass] = useState(true)
     const [validation, setValidation] = useState(false)
     const [badCredentials, setBadCredentials] = useState(false)
-    const [login, {isLoading}] = useLoginMutation()
-    const dispatch = useDispatch()
+    const [login, {isLoading, isError}] = useLoginMutation()
     const navigation = useNavigation()
+
+
+// useEffect(()=>{
+//     (async () => {
+//       try{
+//         await AsyncStorage.removeItem('@userToken')
+//         await AsyncStorage.removeItem('@userData')
+//         console.log('items successfully deleted')
+//       }catch(err){
+//         console.log(err.message)
+//       }
+//     })()
+//   }, [])
 
     const handleLogin = async () => {
         if(!inputsData.email || !inputsData.password){
@@ -26,12 +38,19 @@ const Login = () => {
             return
         }
         try{
-            const {data, isError} = await login(inputsData)
-    
-            if(data && data.status === 'success'){
-                //localStorage.setItem('user-data', JSON.stringify(data.user_data))
-                dispatch(setUser(data.user_data))
+            const {data} = await login(inputsData)
+            // if(data && data.status === 'success'){
+            if(data && data.token && data.user){
+                await AsyncStorage.multiSet([['@userToken', data.token], ['@userData', JSON.stringify(data.user)]])
+                
+                if(!data.user.mt_acc_id || data.user.mt_acc_id == '0'){
+                    navigation.navigate('StackTabs', {screen: 'AccountConf'})
+                    return
+                }
+
+
                 navigation.navigate('MainTabs', {screen: 'Metrics'})
+
                 return
             }
     
@@ -61,6 +80,7 @@ const Login = () => {
                     value={inputsData.email}
                     placeholder='Enter your email' 
                     onChangeText={text => setInputsData({...inputsData, email: text})}
+                    color={'#fff'}
                     />
                 </View>
             </View>
@@ -75,6 +95,7 @@ const Login = () => {
                         className="flex-1" 
                         placeholder='Enter your password' 
                         onChangeText={text => setInputsData({...inputsData, password: text})}
+                        color={'#fff'}
                         />
                     <TouchableOpacity onPress={()=>setHidePass(!hidePass)} className="pl-2">
                         {hidePass && <Feather name="eye-off" size={24} color="white" />}
@@ -86,8 +107,8 @@ const Login = () => {
             <View>
                 <TouchableOpacity 
                     onPress={handleLogin}
-                    className={`bg-[#D4D4D8] mt-10 ${isLoading ? '' : 'p-4'} rounded-lg flex flex-row justify-center`}>
-                    {isLoading ? <LootieLoader /> : <Text>Login</Text>}
+                    className={`bg-[#D4D4D8] mt-10 p-4 rounded-lg flex flex-row justify-center`}>
+                    {isLoading ? <LootieLoader d={20} /> : <Text>Login</Text>}
                 </TouchableOpacity>
             </View>
 

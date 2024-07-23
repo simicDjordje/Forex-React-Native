@@ -15,21 +15,13 @@ import TradeLengthCard from '../../Components/TradeLengthCard'
 import ProfitFactorCard from '../../Components/ProfitFactorCard'
 import TablePeriodCard from '../../Components/TablePeriodCard'
 import {noDataValues} from '../../constants'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Metrics = () => {
   const [skip, setSkip] = useState(false)
   const {data, error, isLoading} = useGetAllDataQuery(null, {
     skip: skip,
   })
-
-  useEffect(()=>{
-    if (!isLoading && data) {
-        // console.log('DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa')
-        // console.log(data)
-        // console.log(data?.metrics)
-    }
-}, [data, isLoading, error])
-
 
 
   if(isLoading){
@@ -94,26 +86,55 @@ const Metrics = () => {
             chart_data={data?.chart_data} 
             chart_type_data={'profit'}
           />
-          {/* Card 3 */}
-          <MiniCard 
-            data={{
-              text1: 'Deposits', 
-              num1: data?.account_data?.deposits, 
-              text2: 'Last transaction', 
-              num2: data?.account_data?.lastTransactionDeposit
-            }} 
-            showMiniChart={false}
-          />
-          {/* Card 4 */}
-          <MiniCard 
-            data={{
-              text1: 'Withdrawals', 
-              num1: data?.account_data?.withdrawls, 
-              text2: 'Last transaction', 
-              num2: data?.account_data?.lastTransactionWithdrawls
-            }} 
-            showMiniChart={false}
-          />
+          {parseInt(data?.account_data?.deposits).toString().length <=4 && parseInt(data?.account_data?.withdrawls).toString().length <=4 ? (
+            <View className="flex flex-row justify-between">
+              {/* Card 3 */}
+                <MiniCard 
+                  data={{
+                    text1: 'Deposits', 
+                    num1: data?.account_data?.deposits, 
+                    text2: 'Last transaction', 
+                    num2: data?.account_data?.lastTransactionDeposit
+                  }} 
+                  showMiniChart={false}
+                  halfSize
+                />
+                {/* Card 4 */}
+                <MiniCard 
+                  data={{
+                    text1: 'Withdrawals', 
+                    num1: data?.account_data?.withdrawls, 
+                    text2: 'Last transaction', 
+                    num2: data?.account_data?.lastTransactionWithdrawls
+                  }} 
+                  showMiniChart={false}
+                  halfSize
+                />
+            </View>
+          ) : (
+            <View>
+              {/* Card 3 */}
+              <MiniCard 
+                data={{
+                  text1: 'Deposits', 
+                  num1: data?.account_data?.deposits, 
+                  text2: 'Last transaction', 
+                  num2: data?.account_data?.lastTransactionDeposit
+                }} 
+                showMiniChart={false}
+              />
+              {/* Card 4 */}
+              <MiniCard 
+                data={{
+                  text1: 'Withdrawals', 
+                  num1: data?.account_data?.withdrawls, 
+                  text2: 'Last transaction', 
+                  num2: data?.account_data?.lastTransactionWithdrawls
+                }} 
+                showMiniChart={false}
+              />
+            </View>
+          )}
         </View>
         
         <View className="px-4 mt-10 mb-10">

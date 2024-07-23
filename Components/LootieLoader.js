@@ -1,13 +1,13 @@
 import LottieView from 'lottie-react-native'
 
-const LootieLoader = () => {
+const LootieLoader = ({d}) => {
   return (
     <LottieView
             autoPlay
             loop
             style={{
-            width: 50,
-            height: 50,
+            width: d || 50,
+            height: d || 50,
             marginLeft: 'auto',
             marginRight: 'auto',
             }}

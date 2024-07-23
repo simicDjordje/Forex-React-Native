@@ -5,6 +5,8 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { Ionicons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import authUserCheck from '../Components/HOC/authUserCheck'
+
 
 const Tab = createBottomTabNavigator()
 
@@ -22,7 +24,7 @@ const BottomTabNavigation = () => {
         
         
     }}>
-      <Tab.Screen name="Metrics" component={MetricsScreen}
+      <Tab.Screen name="Metrics" component={authUserCheck(MetricsScreen)}
         options={{
             tabBarLabelStyle: {display: 'none'},
             tabBarIcon: ({focused}) => (
@@ -46,7 +48,7 @@ const BottomTabNavigation = () => {
         }}
       /> */}
 
-      <Tab.Screen name="Strategy" component={StrategyScreen}
+      <Tab.Screen name="Strategy" component={authUserCheck(StrategyScreen)}
         options={{
             tabBarLabelStyle: {display: 'none'},
             tabBarIcon: ({focused}) => (
@@ -58,13 +60,13 @@ const BottomTabNavigation = () => {
         }}
       />
 
-      <Tab.Screen name="Account" component={AccountScreen}
+      <Tab.Screen name="Account" component={authUserCheck(AccountScreen)}
         options={{
             tabBarLabelStyle: {display: 'none'},
             tabBarIcon: ({focused}) => (
                 <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                   {/* <Ionicons stroke={focused ? 3 : 2} name="settings-sharp" size={24} color={focused ? 'white' : '#97979D'} /> */}
-                  <FontAwesome5 name="user-cog" size={24} stroke={focused ? 3 : 2} color="black" color={focused ? 'white' : '#97979D'} />
+                  <FontAwesome5 name="user-cog" size={24} stroke={focused ? 3 : 2} color={focused ? 'white' : '#97979D'} />
                   <Text style={{color: focused ? 'white': '#97979D', fontSize: 12}}>Account</Text>
                 </View>
             )
