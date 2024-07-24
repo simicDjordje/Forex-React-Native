@@ -4,12 +4,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useState } from 'react'
 import { useRemoveStrategyMutation, useUnsubscribeStrategyMutation } from '../redux/services/apiCore'
 import UnsyncStrategyModal from './UnsyncStrategyModal'
+import SyncStrategyModal from './SyncStrategyModal'
 
 const StrategyCard = ({strategy, setDiscoverData, userData, type}) => {
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const [unsubscribeStrategy, {isLoading: unsubscribeStrategyIsLoading}] = useUnsubscribeStrategyMutation()
     const [removeStrategy, {isLoading: removeStrategyIsLoading}] = useRemoveStrategyMutation()
-    const [isSync, setIsSync] = useState(null)
+    const [strategyToSync, setStrategyToSync] = useState(null)
+    
 
     const handleUnsubscribe = async () => {
         try{
@@ -67,7 +69,7 @@ const StrategyCard = ({strategy, setDiscoverData, userData, type}) => {
         <Text className="text-white">Category: <Text className="text-[#97979D]">Strategy</Text></Text>
       </View>
       <TouchableOpacity 
-        onPress={()=>{userData.money_manager === '0' && type === 'subscribe' ? setIsSync(strategy) : setIsOpen(true)}}
+        onPress={()=>{userData.money_manager == '0' ? type === 'subscribe' ? setStrategyToSync(strategy) : setIsOpen(true) : setIsOpen(true)}}
         className="bg-[#343437] p-3 flex flex-row justify-start items-center rounded-b-md">
         <MaterialCommunityIcons name="vector-link" size={20} color="white" />
         <Text className="text-white ml-2">
@@ -81,6 +83,12 @@ const StrategyCard = ({strategy, setDiscoverData, userData, type}) => {
         setIsModalOpen={setIsOpen}
         handleYes={userData.money_manager == '1' ? handleRemoveStrategy : handleUnsubscribe}
         isLoading={unsubscribeStrategyIsLoading || removeStrategyIsLoading}
+      />
+
+      <SyncStrategyModal 
+      isModalOpen={!!strategyToSync}
+      setIsModalOpen={setStrategyToSync}
+      strategyToSync={strategyToSync}
       />
     </View>
   )

@@ -6,8 +6,8 @@ import MiniLineChartComponent from './Charts/MiniLineChart'
 const MiniCard = ({data, showMiniChart, chart_data, chart_type_data, halfSize}) => {
     const [chartData, setChartData] = useState([])
     const [time, setTime] = useState('m')
-    const formattedNum1Array = !data?.num1 ? ['0.00', ''] : parseFloat(data?.num1).toFixed(2).toLocaleString('en').split('.')
-    const formattedNum2Array = !data?.num2 ? ['0.00', ''] : parseFloat(data?.num2).toFixed(2).toLocaleString('en').split('.')
+    const formattedNum1Array = !data?.num1 ? ['0', '00'] : parseFloat(data?.num1).toFixed(2).toLocaleString('en').split('.')
+    const formattedNum2Array = !data?.num2 ? ['0', '00'] : parseFloat(data?.num2).toFixed(2).toLocaleString('en').split('.')
 
     
     useEffect(() => {
