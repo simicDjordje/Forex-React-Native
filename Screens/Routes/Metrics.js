@@ -28,6 +28,27 @@ const Metrics = () => {
     }, [])
   )
 
+  useEffect(()=>{
+    return
+    (async () => {
+              
+              try{
+                await AsyncStorage.removeItem('@userToken')
+                await AsyncStorage.removeItem('@userData')
+                console.log('items successfully deleted')
+    
+                navigation.navigate('StackTabs', {screen: 'Login'})
+              }catch(err){
+                console.log(err.message)
+              }
+            })()
+    console.log('EEEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOR:')
+    console.log(data)
+    console.log(error)
+    console.log('EEEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOR:')
+
+  }, [data, error])
+
   if(isLoading){
     return (
       <SafeAreaView className="min-h-screen bg-[#101011]">

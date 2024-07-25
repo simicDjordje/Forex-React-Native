@@ -18,7 +18,7 @@ const UnsyncStrategyModal = ({isModalOpen, setIsModalOpen, handleYes}) => {
               <View className="flex-row justify-start items-center pl-5">
                 <Text className="text-2xl font-bold mr-1 text-white">Unsync strategy</Text>
               </View>
-              <TouchableOpacity className="rounded-full mr-5 p-2" onPress={()=>{setIsModalOpen(false)}}>
+              <TouchableOpacity className="rounded-full mr-5 p-2 bg-[#343437]" onPress={()=>{setIsModalOpen(false)}}>
                 <MaterialIcons name="keyboard-arrow-down" size={24} color={'white'} />
               </TouchableOpacity>
             </View>

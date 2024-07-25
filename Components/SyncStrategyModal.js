@@ -27,10 +27,13 @@ const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync}) => {
                 strategy_id: strategyToSync?.id,
                 multiplier: multiplier
             })
-            console.log('data: ', error)
+            console.log('data: ', data)
             if(data.success){
                 setIsSuccess(true)
-                setTimeout(()=>{setIsSuccess(false)}, 1500)
+                setTimeout(()=>{
+                    // setIsSuccess(false)
+                    // setIsModalOpen(false)
+                }, 2000)
             }
         }catch(error){
             console.log(error)
@@ -49,14 +52,17 @@ const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync}) => {
               <View className="flex-row justify-start items-center pl-5">
                 <Text className="text-2xl font-bold mr-1 text-white">Sync this strategy</Text>
               </View>
-              <TouchableOpacity className="rounded-full mr-5 p-2" onPress={()=>{setIsModalOpen(null)}}>
+              <TouchableOpacity className="rounded-full mr-5 p-2 bg-[#343437]" onPress={()=>{
+                setIsSuccess(false)
+                setIsModalOpen(null)
+                }}>
                 <MaterialIcons name="keyboard-arrow-down" size={24} color={'white'} />
               </TouchableOpacity>
             </View>
             <View className="px-4 mb-72">
 
                 {siIsLoading && <View className="px-4 mt-48 flex flex-col justify-center items-center"><LootieLoader /></View>}
-               {siData && !siIsLoading && 
+               {siData && !siIsLoading && !isSuccess &&
                 <View className="px-4 mt-20">
                     <View>
                             <Text className="text-[#97979D] text-md mb-2">Performance fee</Text>
@@ -111,11 +117,22 @@ const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync}) => {
                             className={`bg-[#D4D4D8] mt-10 ${isSuccess ? '' : 'p-4'} rounded-lg flex flex-row justify-center`}>
                             {ssIsLoading && !isSuccess && <LootieLoader d={20} />}
                             {!ssIsLoading && !isSuccess && <Text>Agree</Text>}
-                            {isSuccess && <LootieSuccess />}
+                            {/* {isSuccess && <LootieSuccess />} */}
                             
                         </TouchableOpacity>
                 </View>
                }
+
+
+               {isSuccess && 
+                <View className="px-4 mt-20 flex flex-col justify-center items-center">
+                    <Text className="text-white text-2xl">Your strategy has been successfully provided.</Text>
+                    <View className="mt-12">
+                        <LootieSuccess d={150} />
+                    </View>
+
+                </View>
+                }
             </View>
         </View>
       </View>

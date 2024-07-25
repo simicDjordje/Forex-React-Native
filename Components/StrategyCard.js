@@ -6,7 +6,7 @@ import { useRemoveStrategyMutation, useUnsubscribeStrategyMutation } from '../re
 import UnsyncStrategyModal from './UnsyncStrategyModal'
 import SyncStrategyModal from './SyncStrategyModal'
 
-const StrategyCard = ({strategy, setDiscoverData, userData, type}) => {
+const StrategyCard = ({strategy, setData, userData, type}) => {
     const [isOpen, setIsOpen] = useState(false)
     const [unsubscribeStrategy, {isLoading: unsubscribeStrategyIsLoading}] = useUnsubscribeStrategyMutation()
     const [removeStrategy, {isLoading: removeStrategyIsLoading}] = useRemoveStrategyMutation()
@@ -20,7 +20,7 @@ const StrategyCard = ({strategy, setDiscoverData, userData, type}) => {
             })
 
             if(data.success){
-                setDiscoverData(prevData => {
+                setData(prevData => {
                     const modifiedData = prevData.filter(item => item?.id != strategy?.id)
                     return modifiedData
                 })
@@ -39,7 +39,7 @@ const StrategyCard = ({strategy, setDiscoverData, userData, type}) => {
             })
 
             if(data.success){
-                setDiscoverData(prevData => {
+                setData(prevData => {
                     const modifiedData = prevData.filter(item => item?.id != strategy?.id)
                     return modifiedData
                 })

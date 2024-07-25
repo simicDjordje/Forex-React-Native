@@ -16,6 +16,7 @@ export const apiCore = createApi({
 	}),
 	endpoints: (builder) => ({
 		getAllData: builder.query({query: () => '/get-all-data2'}),
+		getCountries: builder.query({query: () => '/country-list'}),
 		getAvailableServers: builder.query({query: () => '/available-servers'}),
 		register: builder.mutation({
 			query: (data) => {
@@ -101,11 +102,30 @@ export const apiCore = createApi({
 				}
 			}
 		}),
+		changePassword: builder.mutation({
+			query: (data) => {
+				return {
+					url: '/change-password-mobile',
+					method: 'POST',
+					body: data,
+				}
+			}
+		}),
+		editProfile: builder.mutation({
+			query: (data) => {
+				return {
+					url: '/edit-profile',
+					method: 'POST',
+					body: data,
+				}
+			}
+		}),
 	})
 })
 
 export const { 
 	useGetAllDataQuery,
+	useGetCountriesQuery,
 	useGetAvailableServersQuery,
 	useRegisterMutation,
 	useLoginMutation,
@@ -119,4 +139,6 @@ export const {
 	useRemoveStrategyMutation,
 	useAddStrategyMutation,
 	useAddedStrategiesMutation,
+	useChangePasswordMutation,
+	useEditProfileMutation,
 } = apiCore;

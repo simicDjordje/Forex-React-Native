@@ -1,17 +1,20 @@
 import { View, Text, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useAddedStrategiesMutation, useDiscoverStrategiesMutation, useGetAvailableServersQuery } from '../../redux/services/apiCore'
+import { useAddedStrategiesMutation, useAlreadySubscribedStrategiesMutation, useDiscoverStrategiesMutation, useGetAvailableServersQuery } from '../../redux/services/apiCore'
 import LootieLoader from '../../Components/LootieLoader'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DiscoverStrategiesList from '../../Components/DiscoverStrategiesList'
+import ActiveStrategiesList from '../../Components/ActiveStrategiesList'
 
 const Strategy = () => {
   const [userData, setUserData] = useState(null)
   const {data: availableServers, isLoading: availableServersIsLoading} = useGetAvailableServersQuery()
   const [discoverStrategies, {isLoading: discoverIsLoading}] = useDiscoverStrategiesMutation()
   const [addedStrategies, {isLoading: addedIsLoading}] = useAddedStrategiesMutation()
+  const [alreadySubscribedStrategies, {isLoading, isError, error}] = useAlreadySubscribedStrategiesMutation()
   const [discoverData, setDiscoverData] = useState([])
+  const [activeData, setActiveData] = useState([])
 
 
   useEffect(()=>{
@@ -38,6 +41,21 @@ const Strategy = () => {
       })()
   }, [discoverStrategies, addedStrategies, userData])
 
+  useEffect(()=>{
+    (async () => {
+        try{
+            const {data} = await alreadySubscribedStrategies()
+            if(data){
+                if(activeData.length !== data.length){
+                    setActiveData(data)
+                }
+            }
+        }catch(error){
+            console.log(error)
+        }
+    })()
+}, [alreadySubscribedStrategies, setActiveData])
+
   if(availableServersIsLoading || discoverIsLoading || addedIsLoading){
     return (
       <SafeAreaView className="min-h-screen bg-[#101011]">
@@ -60,6 +78,12 @@ const Strategy = () => {
           <DiscoverStrategiesList 
             discoverData={discoverData}
             setDiscoverData={setDiscoverData}
+            userData={userData}
+          />
+
+          <ActiveStrategiesList 
+            activeData={activeData}
+            setActiveData={setActiveData}
             userData={userData}
           />
         </View>

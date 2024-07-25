@@ -12,7 +12,8 @@ const authUserCheck = (WrappedComponent) => {
                 const token = await AsyncStorage.getItem('@userToken')
                 let userData = await AsyncStorage.getItem('@userData') 
                 
-
+                console.log(token)
+                console.log(userData)
                 if(!token || !userData){
                     navigation.navigate('StackTabs', {screen: 'Login'})
                     return
