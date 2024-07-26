@@ -38,20 +38,6 @@ const AccountConf = () => {
   useFocusEffect(
     useCallback(()=>{
         if(!availableServers) refetch()
-
-        return () => {
-          if(!isSuccess){
-            (async () => {
-              try{
-                await AsyncStorage.removeItem('@userToken')
-                await AsyncStorage.removeItem('@userData')
-                console.log('items successfully deleted')
-              }catch(err){
-                console.log(err.message)
-              }
-            })()
-          }
-        }
     }, [])
   )
 
@@ -64,7 +50,6 @@ const AccountConf = () => {
 
     try{
       const {data} = await connectMT({...inputsData, chosen_server: inputsData.chosen_server.id})    
-
       if(data && data.status === 'success'){ 
         navigation.navigate('StackTabs', {screen: 'Metrics'})
       }

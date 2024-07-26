@@ -17,11 +17,11 @@ export const apiCore = createApi({
 	endpoints: (builder) => ({
 		getAllData: builder.query({query: () => '/get-all-data2'}),
 		getCountries: builder.query({query: () => '/country-list'}),
-		getAvailableServers: builder.query({query: () => '/available-servers'}),
+		getAvailableServers: builder.query({query: () => '/available-servers-mobile'}),
 		register: builder.mutation({
 			query: (data) => {
 				return {
-					url: '/register',
+					url: '/register-mobile',
 					method: 'POST',
 					body: data,
 				}
@@ -36,7 +36,7 @@ export const apiCore = createApi({
 		}),
 		connectMT: builder.mutation({
 			query: (data) => ({
-				url: `/connect-mt`,
+				url: `/connect-mt-mobile`,
 				method: 'POST',
 				body: data,
 			})
@@ -49,46 +49,46 @@ export const apiCore = createApi({
 		}),
 		discoverStrategies: builder.mutation({
 			query: () => ({
-				url: `/discover-strategies`,
+				url: `/discover-strategies-mobile`,
 				method: 'POST',
 			})
 		}),
 		strategyInfo: builder.mutation({
 			query: (data) => ({
-				url: `/strategy-info`,
+				url: `/strategy-info-mobile`,
 				method: 'POST',
 				body: data
 			})
 		}),
 		subscribeStrategy: builder.mutation({
 			query: (data) => ({
-				url: `/subscribe-strategy`,
+				url: `/subscribe-strategy-mobile`,
 				method: 'POST',
 				body: data
 			})
 		}),
 		alreadySubscribedStrategies: builder.mutation({
 			query: () => ({
-				url: `/subscribed-strategies`,
+				url: `/subscribed-strategies-mobile`,
 				method: 'POST',
 			})
 		}),
 		addedStrategies: builder.mutation({
 			query: () => ({
-				url: `/added-strategies`,
+				url: `/added-strategies-mobile`,
 				method: 'POST',
 			})
 		}),
 		unsubscribeStrategy: builder.mutation({
 			query: (data) => ({
-				url: `/unsubscribe-strategy`,
+				url: `/unsubscribe-strategy-mobile`,
 				method: 'POST',
 				body: data
 			})
 		}),
 		removeStrategy: builder.mutation({
 			query: (data) => ({
-				url: `/remove-strategy`,
+				url: `/remove-strategy-mobile`,
 				method: 'POST',
 				body: data
 			})
@@ -96,7 +96,7 @@ export const apiCore = createApi({
 		addStrategy: builder.mutation({
 			query: (data) => {
 				return {
-					url: '/add-strategy',
+					url: '/add-strategy-mobile',
 					method: 'POST',
 					body: data,
 				}

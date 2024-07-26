@@ -1,14 +1,13 @@
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Feather from '@expo/vector-icons/Feather'
 import { useRegisterMutation } from '../../redux/services/apiCore'
-import { setUser } from '../../redux/features/authSlice'
-import { useDispatch } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker';
 import SelectCountryModal from '../../Components/SelectCountryModal'
 import LootieLoader from '../../Components/LootieLoader'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const Register = () => {
@@ -22,7 +21,6 @@ const Register = () => {
     const [hidePass, setHidePass] = useState(true)
     const [validation, setValidation] = useState(false)
     const [register, {isLoading}] = useRegisterMutation()
-    const dispatch = useDispatch()
     const navigation = useNavigation()
     const [image, setImage] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -41,6 +39,24 @@ const Register = () => {
         setIsModalOpen(false)
     }
 
+
+    useFocusEffect(useCallback(()=>{
+        (async () => {
+            try{
+                const token = await AsyncStorage.getItem('@userToken')
+                const userData = await AsyncStorage.getItem('@userData')
+
+                if(!token && !userData) return
+
+                await AsyncStorage.removeItem('@userToken')
+                await AsyncStorage.removeItem('@userData')
+                console.log('items successfully deleted from register page')
+            }catch(err){
+              console.log(err.message)
+            }
+          })()
+    }, []))
+
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -56,6 +72,7 @@ const Register = () => {
           setImage(result.assets[0].uri)
         }
       }
+
 
       const handleRegister = async () => {
         if(!inputsData.name || !inputsData.email || !inputsData.password || !inputsData.confirm_password || !inputsData.country || !image){
@@ -76,13 +93,21 @@ const Register = () => {
 
         formData.append('country', inputsData.country)
     
-        const {data} = await register(formData)
-        console.log(formData)
-        console.log('###########', data)
-        if(data && data.status === 'success'){
-            //localStorage.setItem('user-data', JSON.stringify(data.user_data))
-            dispatch(setUser(data.user_data))
-            navigate('/')
+        const {data, error} = await register(formData)
+        // console.log(formData)
+        // console.log('###########33333333333333333', data)
+        // console.log('jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: ', error)
+        if(data && data.token && data.user){
+            await AsyncStorage.multiSet([['@userToken', data.token], ['@userData', JSON.stringify(data.user)]])
+                
+            if(!data.user.mt_acc_id || data.user.mt_acc_id == '0'){
+                navigation.navigate('StackTabs', {screen: 'AccountConf'})
+                return
+            }
+
+            navigation.navigate('MainTabs', {screen: 'Metrics'})
+
+            return
         }
     }
 
@@ -104,6 +129,7 @@ const Register = () => {
                     value={inputsData.name}
                     placeholder='Enter your name' 
                     onChangeText={text => setInputsData({...inputsData, name: text})}
+                    color={'#fff'}
                     />
                 </View>
             </View>
@@ -116,6 +142,7 @@ const Register = () => {
                     value={inputsData.email}
                     placeholder='Enter your email' 
                     onChangeText={text => setInputsData({...inputsData, email: text})}
+                    color={'#fff'}
                     />
                 </View>
             </View>
@@ -140,6 +167,7 @@ const Register = () => {
                         value={inputsData.password}
                         secureTextEntry={hidePass}
                         className="flex-1" 
+                        color={'#fff'}
                         placeholder='Enter your password' 
                         onChangeText={text => setInputsData({...inputsData, password: text})}
                         />
@@ -158,6 +186,7 @@ const Register = () => {
                         value={inputsData.confirm_password} 
                         secureTextEntry={hidePass}
                         className="flex-1" 
+                        color={'#fff'}
                         placeholder='Confirm your password' 
                         onChangeText={text => setInputsData({...inputsData, confirm_password: text})}
                         />
@@ -196,8 +225,8 @@ const Register = () => {
             <View>
                 <TouchableOpacity 
                     onPress={handleRegister}
-                    className={`bg-[#D4D4D8] mt-10 ${isLoading ? '' : 'p-4'} rounded-lg flex flex-row justify-center`}>
-                    {isLoading ? <LootieLoader /> : <Text>Register</Text>}
+                    className={`bg-[#D4D4D8] mt-10 p-4 rounded-lg flex flex-row justify-center`}>
+                    {isLoading ? <LootieLoader d={20} /> : <Text>Register</Text>}
                 </TouchableOpacity>
             </View>
 

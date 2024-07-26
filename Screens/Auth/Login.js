@@ -1,9 +1,9 @@
 import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Feather from '@expo/vector-icons/Feather'
 import { useLoginMutation } from '../../redux/services/apiCore'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import LootieLoader from '../../Components/LootieLoader'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -20,17 +20,22 @@ const Login = () => {
     const navigation = useNavigation()
 
 
-// useEffect(()=>{
-//     (async () => {
-//       try{
-//         await AsyncStorage.removeItem('@userToken')
-//         await AsyncStorage.removeItem('@userData')
-//         console.log('items successfully deleted')
-//       }catch(err){
-//         console.log(err.message)
-//       }
-//     })()
-//   }, [])
+    useFocusEffect(useCallback(()=>{
+        (async () => {
+            try{
+                const token = await AsyncStorage.getItem('@userToken')
+                const userData = await AsyncStorage.getItem('@userData')
+
+                if(!token && !userData) return
+
+                await AsyncStorage.removeItem('@userToken')
+                await AsyncStorage.removeItem('@userData')
+                console.log('items successfully deleted from login page')
+            }catch(err){
+              console.log(err.message)
+            }
+          })()
+    }, []))
 
     const handleLogin = async () => {
         if(!inputsData.email || !inputsData.password){

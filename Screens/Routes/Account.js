@@ -4,8 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as ImagePicker from 'expo-image-picker';
-import { useGetCountriesQuery } from '../../redux/services/apiCore'
+import { useGetCountriesQuery, useLogoutMutation } from '../../redux/services/apiCore'
 import ChangePasswordModal from '../../Components/ChangePasswordModal'
+import LootieLoader from '../../Components/LootieLoader'
+
 
 const Account = () => {
   const navigation = useNavigation()
@@ -14,6 +16,7 @@ const Account = () => {
   const {data: countriesData, isLoading: isCountriesLoading} = useGetCountriesQuery()
   const [userCountry, setUserCountry] = useState(null)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
+  const [logout, {isLoading: isLogoutLoading}] = useLogoutMutation()
 
   useEffect(()=>{
     (async () => {
@@ -24,7 +27,6 @@ const Account = () => {
 
   useEffect(()=>{
     if(!countriesData || !userData) return
-    console.log(countriesData)
     const userCountryFounded = countriesData.find(country => country.id == userData.country_id)
     
     if(userCountryFounded) setUserCountry(userCountryFounded)
@@ -47,6 +49,22 @@ const Account = () => {
       setImage(result.assets[0].uri)
     }
   }
+
+  const handleLogout = async () => {
+    const {data, isError, error} = await logout()
+
+    if(isError || error){
+        alert('There was an error logging you out. Please try again in a few moments.')
+        return
+    }
+
+    if(data && data.success){
+      console.log(data)
+      await AsyncStorage.removeItem('@userToken')
+      await AsyncStorage.removeItem('@userData')
+      navigation.navigate('StackTabs', {screen: 'Login'})
+    }
+}
 
   // useEffect(()=>{
   //       (async () => {
@@ -163,8 +181,9 @@ const Account = () => {
             </TouchableOpacity>
 
             <TouchableOpacity 
+                onPress={handleLogout}
                 className={`bg-[#D4D4D8] p-4 rounded-lg flex flex-row justify-center mt-4`}>
-                <Text >Log Out</Text>
+                {isLogoutLoading ? <LootieLoader d={20} /> : <Text>Log Out</Text>}
             </TouchableOpacity>
           
         </View>

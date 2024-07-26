@@ -27,6 +27,7 @@ const Strategy = () => {
   useEffect(()=>{
       (async () => {
           try{
+
               if(!userData) return
 
               const {data} = userData.money_manager == '1' ? await addedStrategies() : await discoverStrategies()
@@ -56,7 +57,7 @@ const Strategy = () => {
     })()
 }, [alreadySubscribedStrategies, setActiveData])
 
-  if(availableServersIsLoading || discoverIsLoading || addedIsLoading){
+  if(availableServersIsLoading || discoverIsLoading || addedIsLoading || !userData){
     return (
       <SafeAreaView className="min-h-screen bg-[#101011]">
         <View className="px-4 mt-10">
@@ -81,11 +82,13 @@ const Strategy = () => {
             userData={userData}
           />
 
-          <ActiveStrategiesList 
-            activeData={activeData}
-            setActiveData={setActiveData}
-            userData={userData}
-          />
+          {userData.money_manager != '1' && 
+            <ActiveStrategiesList 
+              activeData={activeData}
+              setActiveData={setActiveData}
+              userData={userData}
+            />
+          }
         </View>
       </ScrollView>
     </SafeAreaView>

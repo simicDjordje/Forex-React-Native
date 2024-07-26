@@ -30,7 +30,7 @@ const SelectServerModal = ({isModalOpen, setIsModalOpen, setSelectedServer, serv
     visible={isModalOpen}
     >
       <View className="flex-col flex-1 justify-end">
-        <View className="h-3/4 rounded-t-3xl shadow-none bg-[#101011]">
+        <View className="h-3/4 rounded-t-3xl shadow-none bg-black border border-0.5 border-[#202021]">
             <View className="mt-5 flex-row justify-between items-center">
               <View className="flex-row justify-start items-center pl-5">
                 <Text className="text-2xl font-bold mr-1 text-[#97979D]">Select server</Text>

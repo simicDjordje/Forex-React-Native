@@ -8,7 +8,7 @@ const DiscoverStrategiesList = ({discoverData, setDiscoverData, userData}) => {
   return (
     <View className="mt-32">
         <View className="flex flex-row mb-10">
-          <Text className="text-white text-2xl">Discover</Text>
+          <Text className="text-white text-2xl">{userData.money_manager == '1' ? 'My Strategies' : 'Discover'}</Text>
         </View>
 
         <ScrollView 

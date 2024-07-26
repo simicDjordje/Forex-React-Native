@@ -7,6 +7,8 @@ export { default as SettingsScreen } from './Routes/Settings'
 export { default as StrategyScreen } from './Routes/Strategy'
 export { default as AccountScreen } from './Routes/Account'
 export { default as AccountConfScreen } from './Routes/AccountConf'
+export { default as AddStrategyScreen } from './Routes/AddStrategy'
+
 
 
 export {default as LoadingScreen} from './Routes/Loading'
