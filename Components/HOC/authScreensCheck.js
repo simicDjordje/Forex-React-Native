@@ -13,7 +13,7 @@ const authScreensCheck = WrappedComponent => {
             
             
             if(token && userData){
-                navigation.navigate('MainTabs', {screen: 'Metrics'})
+                navigation.navigate('MainTabs', {screen: userData.money_manager && userData.money_manager == '1' ? 'Strategy' : 'Metrics'})
                 return
             }
         }catch(err){

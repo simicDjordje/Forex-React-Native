@@ -6,6 +6,7 @@ import { useLoginMutation } from '../../redux/services/apiCore'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import LootieLoader from '../../Components/LootieLoader'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Header from '../../Components/Header'
 
 
 const Login = () => {
@@ -72,7 +73,10 @@ const Login = () => {
   return (
     <SafeAreaView className="bg-[#101011] min-h-screen">
       <View className="min-h-screen">
-        <View className="flex flex-row justify-center mt-28">
+        <View className="px-8 mt-10">
+            <Header />
+        </View>
+        <View className="flex flex-row justify-center mt-20">
             <Text className="text-white text-3xl font-bold">Login</Text>
         </View>
 

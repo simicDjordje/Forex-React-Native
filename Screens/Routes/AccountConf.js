@@ -3,12 +3,13 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useConnectMTMutation, useGetAvailableServersQuery } from '../../redux/services/apiCore';
+import { useConnectMTMutation, useGetAvailableServersQuery, useLogoutMutation } from '../../redux/services/apiCore';
 import Feather from '@expo/vector-icons/Feather'
 import SelectServerModal from '../../Components/SelectServerModal';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import LootieLoader from '../../Components/LootieLoader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FailModal from '../../Components/FailModal';
 
 
 const AccountConf = () => {
@@ -27,6 +28,9 @@ const AccountConf = () => {
   const [hidePass, setHidePass] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigation = useNavigation()
+  const [logout, {isLoading: isLogoutLoading}] = useLogoutMutation()
+  const [failModalOpen, setFailModalOpen] = useState(false)
+  const [errorMessageType, setErrorMessageType] = useState(null)
 
   // useEffect(()=>{
   //   if(availableServers){
@@ -49,9 +53,27 @@ const AccountConf = () => {
     }
 
     try{
-      const {data} = await connectMT({...inputsData, chosen_server: inputsData.chosen_server.id})    
+      const {data, isError} = await connectMT({...inputsData, chosen_server: inputsData.chosen_server.id})    
+      console.log(data)
       if(data && data.status === 'success'){ 
-        navigation.navigate('StackTabs', {screen: 'Metrics'})
+        await AsyncStorage.setItem('@userData', JSON.stringify(data.user_data))        
+        navigation.navigate('MainTabs', {screen: data.user_data.money_manager && data.user_data.money_manager == '1' ? 'Strategy' : 'Metrics'})
+        return
+      }
+
+      if(isError){
+        setErrorMessageType('isError')
+        setFailModalOpen(true)
+      }
+
+      if(data && data.status === 'fail'){
+        setErrorMessageType('fail')
+        setFailModalOpen(true)
+      }
+
+      if(data && data.status == 'already_connected'){
+        setErrorMessageType('already_connected')
+        setFailModalOpen(true)
       }
 
     }catch(err){
@@ -68,6 +90,26 @@ const AccountConf = () => {
       setIsModalOpen(false)
     }
   }
+
+  const handleLogout = async () => {
+    const {data, isError, error} = await logout()
+
+    if(isError || error){
+        alert('There was an error logging you out. Please try again in a few moments.')
+        return
+    }
+
+    if(data && data.success){
+      console.log(data)
+      await AsyncStorage.removeItem('@userToken')
+      await AsyncStorage.removeItem('@userData')
+      // navigation.navigate('StackTabs', {screen: 'Login'})
+      navigation.reset({
+          index: 0,
+          routes: [{ name: 'StackTabs', params: { screen: 'Login' } }],
+      })
+    }
+}
 
   return (
     <SafeAreaView className="bg-[#101011] px-4">
@@ -206,6 +248,17 @@ const AccountConf = () => {
                 {isLoading ? <LootieLoader d={30} /> : <Text className="text-white text-lg mb-1">Connect</Text>}
             </TouchableOpacity>}
 
+            <TouchableOpacity 
+                onPress={handleLogout}
+                className={`bg-[#D4D4D8] mt-5 h-10 rounded-md flex flex-row justify-center items-center`}>
+                {isLogoutLoading ? <LootieLoader d={30} /> : (
+                  <View className="flex flex-row justify-center items-center">
+                    <MaterialIcons name="keyboard-arrow-left" size={24} color="black" />
+                    <Text className="text-lg mb-1">Log Out</Text>
+                  </View>
+                )}
+            </TouchableOpacity>
+
           </View>
         </LinearGradient>
       </View>
@@ -221,6 +274,12 @@ const AccountConf = () => {
       serversData={availableServers}
     />
     }
+
+    <FailModal 
+      isModalOpen={failModalOpen}
+      setIsModalOpen={setFailModalOpen}
+      messageType={errorMessageType}
+    />
     </SafeAreaView>
   )
 }

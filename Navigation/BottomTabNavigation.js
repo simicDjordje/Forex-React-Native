@@ -6,10 +6,11 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { Ionicons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import authUserCheck from '../Components/HOC/authUserCheck'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
 import LootieLoader from '../Components/LootieLoader'
+
 
 
 const Tab = createBottomTabNavigator()
