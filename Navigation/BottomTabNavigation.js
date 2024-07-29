@@ -6,21 +6,37 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { Ionicons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import authUserCheck from '../Components/HOC/authUserCheck'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useFocusEffect } from '@react-navigation/native'
+import LootieLoader from '../Components/LootieLoader'
 
 
 const Tab = createBottomTabNavigator()
 
 const BottomTabNavigation = () => {
   const [userData, setUserData] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(()=>{
+  useFocusEffect(useCallback(()=>{
     (async () => {
-      const user = await AsyncStorage.getItem('@userData')
-      setUserData(JSON.parse(user))
+      try{
+        setIsLoading(true)
+        const user = await AsyncStorage.getItem('@userData')
+        setUserData(JSON.parse(user))
+      }catch(err){
+        console.log(err)
+      }finally{
+        setIsLoading(false)
+      }
     })()
-  }, [])
+  }, []))
+
+  if(isLoading) return (
+    <View className="h-full bg-[#101011] flex flex-col justify-center items-center">
+        <LootieLoader />
+    </View>
+  )
 
   return (
     <Tab.Navigator screenOptions={{
@@ -30,7 +46,7 @@ const BottomTabNavigation = () => {
           backgroundColor: '#202021', 
           borderTopWidth: 0, 
           paddingBottom: 2,
-          paddingTop: 4
+          paddingTop: 4,
         },
         
         

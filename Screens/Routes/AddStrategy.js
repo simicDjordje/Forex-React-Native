@@ -35,6 +35,10 @@ const AddStrategy = () => {
         }, [])
       )
 
+      useEffect(()=>{
+        console.log(availableServers)
+      }, [availableServers])
+
     const setSelectedServer = (value) => {
         const foundedServer = availableServers.find(i => i.id === value)
 
@@ -94,15 +98,17 @@ const AddStrategy = () => {
         formData.append('factsheet_url', inputsData.factsheet_url)
         formData.append('platform', inputsData.platform)
         formData.append('strategy_name', inputsData.strategy_name)
-        formData.append('server', inputsData.server)
+        formData.append('server', inputsData.server?.id)
         formData.append('account_number', inputsData.account_number)
         formData.append('performance_fee', inputsData.performance_fee)
         formData.append('recommended_equity', inputsData.recommended_equity)
         formData.append('account_password', inputsData.account_password)
         // formData.append('profile-photo', image)
-        
+        console.log('formData: ', formData)
         try{
-            const {data} = await addStrategy(formData)
+            const {data, error} = await addStrategy(formData)
+            console.log('add strategy data: ', data)
+            console.log('add error: ', error)
             if(data){
                 setIsSuccess(true)
                 setInputsData({
@@ -200,6 +206,7 @@ const AddStrategy = () => {
                     placeholderTextColor={'#101011'}
                     value={inputsData.performance_fee}
                     placeholder='Enter performance fee' 
+                    keyboardType='numeric'
                     onChangeText={text => setInputsData({...inputsData, performance_fee: text})}
                     color={'#fff'}
                     />
@@ -212,6 +219,7 @@ const AddStrategy = () => {
                     <TextInput
                     placeholderTextColor={'#101011'}
                     value={inputsData.recommended_equity}
+                    keyboardType='numeric'
                     placeholder='Enter performance fee' 
                     onChangeText={text => setInputsData({...inputsData, recommended_equity: text})}
                     color={'#fff'}
@@ -263,14 +271,14 @@ const AddStrategy = () => {
         <View className="mb-48"></View>
       </ScrollView>
 
-      {availableServers &&  
+      
         <SelectServerModal 
             isModalOpen={isModalOpen} 
             setIsModalOpen={setIsModalOpen} 
             setSelectedServer={setSelectedServer} 
-            serversData={availableServers}
+            serversData={availableServers || []}
         />
-        }
+        
 
         <AddedStrategySuccessModal isModalOpen={isSuccess} setIsModalOpen={setIsSuccess} />
     </SafeAreaView>

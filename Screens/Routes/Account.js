@@ -62,7 +62,11 @@ const Account = () => {
       console.log(data)
       await AsyncStorage.removeItem('@userToken')
       await AsyncStorage.removeItem('@userData')
-      navigation.navigate('StackTabs', {screen: 'Login'})
+      // navigation.navigate('StackTabs', {screen: 'Login'})
+      navigation.reset({
+          index: 0,
+          routes: [{ name: 'StackTabs', params: { screen: 'Login' } }],
+      })
     }
 }
 

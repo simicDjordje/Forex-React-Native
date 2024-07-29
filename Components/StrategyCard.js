@@ -6,7 +6,7 @@ import { useRemoveStrategyMutation, useUnsubscribeStrategyMutation } from '../re
 import UnsyncStrategyModal from './UnsyncStrategyModal'
 import SyncStrategyModal from './SyncStrategyModal'
 
-const StrategyCard = ({strategy, setData, userData, type}) => {
+const StrategyCard = ({strategy, setData, userData, type, fetchActiveData}) => {
     const [isOpen, setIsOpen] = useState(false)
     const [unsubscribeStrategy, {isLoading: unsubscribeStrategyIsLoading}] = useUnsubscribeStrategyMutation()
     const [removeStrategy, {isLoading: removeStrategyIsLoading}] = useRemoveStrategyMutation()
@@ -89,6 +89,7 @@ const StrategyCard = ({strategy, setData, userData, type}) => {
       isModalOpen={!!strategyToSync}
       setIsModalOpen={setStrategyToSync}
       strategyToSync={strategyToSync}
+      fetchActiveData={fetchActiveData}
       />
     </View>
   )

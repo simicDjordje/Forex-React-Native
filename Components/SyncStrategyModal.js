@@ -7,7 +7,7 @@ import LootieLoader from './LootieLoader'
 import Slider from '@react-native-community/slider'
 import LootieSuccess from './LootieSuccess'
 
-const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync}) => {
+const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync, fetchActiveData}) => {
     const [strategyInfo, {data: siData, isLoading: siIsLoading, isError: siIsError, error: siError}] = useStrategyInfoMutation()
     const [subscribeStrategy, {isLoading: ssIsLoading, isError: ssIsError, error: ssError}] = useSubscribeStrategyMutation()
     const [multiplier, setMultiplier] = useState(1)
@@ -30,10 +30,11 @@ const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync}) => {
             console.log('data: ', data)
             if(data.success){
                 setIsSuccess(true)
-                setTimeout(()=>{
-                    // setIsSuccess(false)
-                    // setIsModalOpen(false)
-                }, 2000)
+                fetchActiveData()
+                // setTimeout(()=>{
+                //     // setIsSuccess(false)
+                //     // setIsModalOpen(false)
+                // }, 2000)
             }
         }catch(error){
             console.log(error)
@@ -126,7 +127,7 @@ const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync}) => {
 
                {isSuccess && 
                 <View className="px-4 mt-20 flex flex-col justify-center items-center">
-                    <Text className="text-white text-2xl">Your strategy has been successfully provided.</Text>
+                    <Text className="text-white text-2xl">Strategy successfully synced</Text>
                     <View className="mt-12">
                         <LootieSuccess d={150} />
                     </View>

@@ -53,6 +53,10 @@ const Login = () => {
                     return
                 }
 
+                if(data.user.money_manager && data.user.money_manager == '1'){
+                    navigation.navigate('MainTabs', {screen: 'Strategy'})
+                    return
+                }
 
                 navigation.navigate('MainTabs', {screen: 'Metrics'})
 

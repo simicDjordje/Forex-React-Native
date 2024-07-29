@@ -17,7 +17,7 @@ export const apiCore = createApi({
 	endpoints: (builder) => ({
 		getAllData: builder.query({query: () => '/get-all-data2'}),
 		getCountries: builder.query({query: () => '/country-list'}),
-		getAvailableServers: builder.query({query: () => '/available-servers-mobile'}),
+		getAvailableServers: builder.query({query: () => '/available-servers'}),
 		register: builder.mutation({
 			query: (data) => {
 				return {

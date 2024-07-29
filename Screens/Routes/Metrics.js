@@ -46,13 +46,13 @@ const Metrics = () => {
     <SafeAreaView className="min-h-screen bg-[#101011]">
       <ScrollView>
         <View className="px-4 mt-10">
-          <Header />
+          <Header title={'Metrics'} />
         </View>
 
-        <View className="px-4 mt-14">
+        {/* <View className="px-4 mt-14">
           <Text className="text-white text-3xl">Metrics</Text>
-          {/* <Text className="text-[#343437] text-md mt-3">Updated 26 minutes ago</Text> */}
-        </View>
+          <Text className="text-[#343437] text-md mt-3">Updated 26 minutes ago</Text>
+        </View> */}
 
         {/* <View className="px-4 mt-3">
           <TouchableOpacity className="bg-[#202021] w-1/4 flex flex-row justify-center px-1 py-2 rounded-lg">
