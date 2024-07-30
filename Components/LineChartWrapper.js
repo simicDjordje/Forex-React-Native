@@ -3,6 +3,7 @@ import React, {useState, useCallback, useEffect, useRef} from 'react'
 import LineChartComponent from './Charts/LineChart'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import BarChartComponent from './Charts/BarChart';
 
 const monthNames = [
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -181,11 +182,11 @@ const LineChartWrapper = ({data}) => {
         <View className="flex flex-row justify-between px-2">
             <Text className="text-white text-2xl ml-2">Trading period</Text>
             <View className="flex flex-row justify-between bg-[#202021] p-2 rounded-md">
-                <TouchableOpacity className="mr-2 bg-[#343437] p-1 rounded-md">
-                    <MaterialCommunityIcons name="chart-bell-curve-cumulative" size={24} color="white" />
+                <TouchableOpacity onPress={()=>{setChartType('line')}} className="mr-2 bg-[#343437] p-1 rounded-md">
+                    <MaterialCommunityIcons name="chart-bell-curve-cumulative" size={24} color={chartType === 'line' ? 'white' : 'gray'} />
                 </TouchableOpacity>
-                <TouchableOpacity className="bg-[#343437] p-1 rounded-md">
-                    <MaterialCommunityIcons name="chart-bar" size={24} color="gray" />
+                <TouchableOpacity onPress={()=>{setChartType('bar')}} className="bg-[#343437] p-1 rounded-md">
+                    <MaterialCommunityIcons name="chart-bar" size={24} color={chartType === 'bar' ? 'white' : 'gray'} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -223,15 +224,18 @@ const LineChartWrapper = ({data}) => {
                 </TouchableOpacity>
             </View>
 
-            <View className="bg-[#202021] p-2 rounded-md ml-2">
-                <TouchableOpacity onPress={handleScrollRef} className="bg-[#343437] p-1 rounded-md">
-                    <MaterialIcons name="keyboard-arrow-right" size={24} color="white" />
-                </TouchableOpacity>
-            </View>
+            {chartType === 'line' && 
+              <View className="bg-[#202021] p-2 rounded-md ml-2">
+                  <TouchableOpacity onPress={handleScrollRef} className="bg-[#343437] p-1 rounded-md">
+                      <MaterialIcons name="keyboard-arrow-right" size={24} color="white" />
+                  </TouchableOpacity>
+              </View>
+            }
         </View>
 
-        <View className="mt-10 min-h-44">
-            <LineChartComponent
+        <View className={`${chartType === 'line' ? 'mt-10' : 'mt-20'} min-h-44`}>
+            {chartType === 'line' && 
+              <LineChartComponent
                 // data={[{id: type.charAt(0).toUpperCase() + type.slice(1), data: chartData}]}
                 data={chartData}
                 time={time}
@@ -239,6 +243,17 @@ const LineChartWrapper = ({data}) => {
                 setIsLoading={setIsLoading}
                 ref={chartRef}
             />
+            }
+
+            {chartType === 'bar' && 
+              <BarChartComponent
+                  // data={[{id: type.charAt(0).toUpperCase() + type.slice(1), data: chartData}]}
+                  data={chartData}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                  isBig
+              />
+              }
         </View>
     </View>
   )

@@ -40,7 +40,7 @@ const data2 = [
     {"label": "Dec", "monthIndex": 11, "value": 0}
 ]
 
-const BarChartComponent = ({data, isLoading, setIsLoading}) => {
+const BarChartComponent = ({data, isLoading, setIsLoading, isBig}) => {
     
     const [modifiedData, setModifiedData] = useState([])
     const [maxValue, setMaxValue] = useState(0)
@@ -236,7 +236,7 @@ const BarChartComponent = ({data, isLoading, setIsLoading}) => {
 
             <View className={`${hideYAxis ? '-ml-10' : ''} mt-5`}>
             <BarChart
-                barWidth={22}
+                barWidth={isBig ? 30 : 22}
                 scrollRef={chartRef}
                 noOfSections={3}
                 barBorderRadius={4}
