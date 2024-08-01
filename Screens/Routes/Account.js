@@ -31,7 +31,7 @@ const Account = () => {
     
     if(userCountryFounded) setUserCountry(userCountryFounded)
 
-  }, [countriesData])
+  }, [countriesData, userData])
 
 
   const pickImage = async () => {
