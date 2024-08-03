@@ -93,7 +93,7 @@ const SyncStrategyModal = ({isModalOpen, setIsModalOpen, strategyToSync, fetchAc
                         </View>
 
                         <View className="mt-6">
-                            <Text className="text-[#97979D] text-md mb-2">Recommended equity</Text>
+                            <Text className="text-[#97979D] text-md mb-2">Multiplier</Text>
                             <View className="bg-[#343437] p-1 rounded-lg flex flex-row justify-between items-center">
                             <Text className="text-white mx-1 font-bold mt-6">1</Text>
                             <View className="flex-1 flex flex-col justify-center items-center">

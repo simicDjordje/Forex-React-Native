@@ -10,7 +10,7 @@ const DiscoverStrategiesList = ({discoverData, setDiscoverData, userData, fetchA
   return (
     <View className="mt-20">
         <View className="flex flex-row mb-10 justify-center">
-          <Text className="text-white text-2xl">{userData.money_manager == '1' ? 'My Strategies' : 'Discover'}</Text>
+          <Text className="text-white text-2xl">{userData.money_manager == '1' ? 'My Portfolio' : 'Discover'}</Text>
         </View>
 
         {discoverData && !discoverData.length && userData.money_manager != '1' &&

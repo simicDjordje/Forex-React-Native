@@ -28,6 +28,7 @@ const AddStrategy = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     // const [image, setImage] = useState(null)
     const [isSuccess, setIsSuccess] = useState(false)
+    const [summaryData, setSummaryData] = useState({})
 
     useFocusEffect(
         useCallback(()=>{
@@ -47,6 +48,22 @@ const AddStrategy = () => {
             setIsModalOpen(false)
         }
     }
+
+    useEffect(()=>{
+        if(!Object.keys(summaryData).length) return
+
+        setInputsData({
+            factsheet_url: '',
+            platform: 'mt4',
+            strategy_name: '',
+            server: '',
+            account_number: '',
+            performance_fee: '',
+            recommended_equity: '',
+            account_password: '',
+        })
+    }, [summaryData])
+
 
     // const pickImage = async () => {
     //     // No permissions request is necessary for launching the image library
@@ -78,6 +95,7 @@ const AddStrategy = () => {
         })
         setValidation(false)
       }, []))
+
 
       const handleAddNewStrategy = async () => {
         if(
@@ -111,17 +129,8 @@ const AddStrategy = () => {
             console.log('add error: ', error)
             if(data){
                 setIsSuccess(true)
-                setInputsData({
-                    factsheet_url: '',
-                    platform: 'mt4',
-                    strategy_name: '',
-                    server: '',
-                    account_number: '',
-                    performance_fee: '',
-                    recommended_equity: '',
-                    account_password: '',
-                })
                 setValidation(false)
+                setSummaryData(inputsData)
             }
         }catch(error){
             console.log(error)
@@ -220,7 +229,7 @@ const AddStrategy = () => {
                     placeholderTextColor={'#101011'}
                     value={inputsData.recommended_equity}
                     keyboardType='numeric'
-                    placeholder='Enter performance fee' 
+                    placeholder='Enter recommended equity' 
                     onChangeText={text => setInputsData({...inputsData, recommended_equity: text})}
                     color={'#fff'}
                     />
@@ -233,7 +242,7 @@ const AddStrategy = () => {
                     <TextInput
                     placeholderTextColor={'#101011'}
                     value={inputsData.account_number}
-                    placeholder='Enter performance fee' 
+                    placeholder='Enter account number' 
                     onChangeText={text => setInputsData({...inputsData, account_number: text})}
                     color={'#fff'}
                     />
@@ -280,7 +289,11 @@ const AddStrategy = () => {
         />
         
 
-        <AddedStrategySuccessModal isModalOpen={isSuccess} setIsModalOpen={setIsSuccess} />
+        <AddedStrategySuccessModal 
+            isModalOpen={isSuccess} 
+            setIsModalOpen={setIsSuccess} 
+            summaryData={summaryData}
+            />
     </SafeAreaView>
   )
 }

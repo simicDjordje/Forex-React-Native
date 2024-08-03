@@ -28,6 +28,10 @@ const Metrics = () => {
     }, [])
   )
 
+  // useEffect(()=>{
+  //   console.log(data?.period_data)
+  // }, [data])
+
 
   if(isLoading){
     return (
@@ -160,7 +164,7 @@ const Metrics = () => {
           </View>
 
           {/* Table Period Card */}
-          <TablePeriodCard data={data?.period_data?.messages[0].content == 'This TradeAccount has no period data' ? noDataValues : data?.period_data} />
+          <TablePeriodCard data={data?.period_data?.messages[0].content == 'This TradeAccount has no period data' ||  data?.period_data?.messages[0].content.startsWith('Internal Server Error') ? noDataValues : data?.period_data} />
 
           {/* Monthly Gain-Bar Chart */}
           <View className="rounded-xl mt-5 border border-0.5 border-[#202021]">

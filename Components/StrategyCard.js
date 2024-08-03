@@ -83,6 +83,7 @@ const StrategyCard = ({strategy, setData, userData, type, fetchActiveData}) => {
         setIsModalOpen={setIsOpen}
         handleYes={userData.money_manager == '1' ? handleRemoveStrategy : handleUnsubscribe}
         isLoading={unsubscribeStrategyIsLoading || removeStrategyIsLoading}
+        isMoneyManager={userData.money_manager == '1'}
       />
 
       <SyncStrategyModal 

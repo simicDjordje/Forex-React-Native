@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import { useState, useEffect } from 'react'
 
 
-const UnsyncStrategyModal = ({isModalOpen, setIsModalOpen, handleYes}) => {
+const UnsyncStrategyModal = ({isModalOpen, setIsModalOpen, handleYes, isMoneyManager}) => {
     
   return (
     <Modal
@@ -26,7 +26,7 @@ const UnsyncStrategyModal = ({isModalOpen, setIsModalOpen, handleYes}) => {
                 
                 <View className="mt-10">
                     <View className="flex flex-row justify-center items-center">
-                        <Text className="text-white text-xl">Are you sure?</Text>
+                        <Text className="text-white text-xl">{isMoneyManager ? 'Deleting your strategy cannot be undone, do you want to proceed?' : 'Are you sure?' }</Text>
                     </View>
 
                     <View className="flex flex-row justify-between px-20 mt-10">

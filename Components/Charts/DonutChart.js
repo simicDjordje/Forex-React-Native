@@ -49,6 +49,7 @@ const DonutChartComponent = ({data, isLoading, setIsLoading, maxValueItem, setMa
             innerRadius={90}
             innerCircleColor={'#0d0d0c'}
             focusOnPress
+            onPress={(item)=>{handleDayPress(item)}}
             //strokeWidth={10}
             //strokeColor="#FFFFFF00"
             centerLabelComponent={() => {
