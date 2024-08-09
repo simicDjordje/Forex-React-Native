@@ -257,12 +257,14 @@ const BarChartComponent = ({data, isLoading, setIsLoading, isBig}) => {
                     return (
                     <View
                         style={{
-                        marginBottom: 20,
-                        marginLeft: -20,
+                        marginBottom: 12,
+                        marginLeft: -5,
                         backgroundColor: item.wasNegative ? '#f08080cc' : '#343437',
-                        paddingHorizontal: 6,
-                        paddingVertical: 4,
+                        paddingHorizontal: 1,
+                        paddingVertical: 1,
                         borderRadius: 4,
+                        // borderColor: item.wasNegative ? '#343437' : '#202021',
+                        // borderWidth: 5,
                         }}>
                         <Text className="text-white">{item.wasNegative ? parseFloat(-item.value).toFixed(2) : parseFloat(item.value).toFixed(2)}</Text>
                     </View>

@@ -104,9 +104,10 @@ const LineChartComponent = forwardRef(({data, isLoading, setIsLoading}, ref) => 
         startOpacity1={0.3}
         endOpacity1={0.1}
         spacing={85}
-        maxValue={maxValue}
+        maxValue={maxValue * 1.2}
         stepValue={maxValue / 5}
         height={150}
+        
         
         yAxisColor={'transparent'}
         yAxisTextStyle={{color: isAllNegative ? 'rgba(240, 128, 128, 0.8)' : 'white'}}
@@ -129,7 +130,8 @@ const LineChartComponent = forwardRef(({data, isLoading, setIsLoading}, ref) => 
         showValuesAsDataPointsText
         focusedDataPointHeight={10}
         focusedDataPointWidth={10}
-        delayBeforeUnFocus={5000}
+        delayBeforeUnFocus={30000}
+        
       />
   )
 })
